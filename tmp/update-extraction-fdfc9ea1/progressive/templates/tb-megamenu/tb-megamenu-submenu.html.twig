@@ -1,0 +1,11 @@
+{%
+  set ul_classes = [
+    'sub',
+    'row',
+  ]
+%}
+<ul {{ attributes.addClass(ul_classes) }}>
+  {% for row in rows %}
+    {{ row }}
+  {% endfor %}
+</ul>

@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.clients_slider
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__clients_slider_block
+theme: progressive_sub
+region: content
+weight: -11
+provider: null
+plugin: 'views_block:clients_slider-block'
+settings:
+  id: 'views_block:clients_slider-block'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /node/67
+    negate: false
+    context_mapping: {  }

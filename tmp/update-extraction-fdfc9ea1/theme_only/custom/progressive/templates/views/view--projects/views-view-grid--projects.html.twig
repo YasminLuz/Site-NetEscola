@@ -1,0 +1,59 @@
+{#
+/**
+ * @file
+ * Default theme implementation for views to display rows in a grid.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapping element.
+ * - title: The title of this group of rows.
+ * - view: The view object.
+ * - rows: The rendered view results.
+ * - options: The view plugin style options.
+ *   - row_class_default: A flag indicating whether default classes should be
+ *     used on rows.
+ *   - col_class_default: A flag indicating whether default classes should be
+ *     used on columns.
+ * - items: A list of grid items. Each item contains a list of rows or columns.
+ *   The order in what comes first (row or column) depends on which alignment
+ *   type is chosen (horizontal or vertical).
+ *   - attributes: HTML attributes for each row or column.
+ *   - content: A list of columns or rows. Each row or column contains:
+ *     - attributes: HTML attributes for each row or column.
+ *     - content: The row or column contents.
+ *
+ * @see template_preprocess_views_view_grid()
+ *
+ * @ingroup themeable
+ */
+#}
+<div class="container">
+  <div class="portfolio">
+
+    <div class="btn-group filter-buttons filter-list white clearfix">
+      <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+        {{ 'All items'|t }}<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li>
+          <a href="#" data-filter="*" class="active">{{ 'All items'|t }}</a>
+        </li>
+        {% for key, tab in rows.view_tabs['#tabs'] %}
+          <li>
+            <a href="#" data-filter=".{{ key }}">
+              {{ tab|t }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div><!-- .filter-buttons -->
+
+    <div class="row filter-elements">
+      {% for row in items %}
+        {% for column in row.content %}
+          {{ column.content }}
+        {% endfor %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: team_60x60
+label: 'Team (60x60)'
+effects:
+  2f75e3f5-f858-4e41-85fb-5718d0b7d014:
+    uuid: 2f75e3f5-f858-4e41-85fb-5718d0b7d014
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 60
+      height: 60

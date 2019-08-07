@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: display_size
+label: 'Display Size'
+elementType: select

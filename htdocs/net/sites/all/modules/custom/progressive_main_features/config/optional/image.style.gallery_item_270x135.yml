@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: gallery_item_270x135
+label: 'Gallery Item (270x135)'
+effects:
+  bcf9551d-c72d-49e3-ac30-710c3646db6a:
+    uuid: bcf9551d-c72d-49e3-ac30-710c3646db6a
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 270
+      height: 135

@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.project_slider
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__project_slider_block
+theme: progressive_sub
+region: top
+weight: -18
+provider: null
+plugin: 'views_block:project_slider-block'
+settings:
+  id: 'views_block:project_slider-block'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/node/67\r\n/portfolio-1-column/slider"
+    negate: false
+    context_mapping: {  }

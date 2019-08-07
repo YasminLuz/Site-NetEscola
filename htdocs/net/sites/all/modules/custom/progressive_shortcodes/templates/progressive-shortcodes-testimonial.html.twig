@@ -1,0 +1,17 @@
+<div {{ attrs|raw }}>
+  <div class="{{ class }}">
+    {{ text|raw }}
+  </div>
+  <div class="name">
+    <div class="icon">
+      {% if img is not empty %}
+        {{ img }}
+      {% else %}
+        <i class="fa fa-user"></i>
+      {% endif %}
+    </div>
+    {% if author %}
+      <strong>{{ author }}</strong>{% endif %}{% if author_info %}<a href="#" class="no-border">{{ author_info }}</a>
+    {% endif %}
+  </div>
+</div>

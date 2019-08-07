@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: gallery_item_570x416
+label: 'Gallery Item (570x416)'
+effects:
+  72d11379-faf7-474b-bf3b-1d121e411d41:
+    uuid: 72d11379-faf7-474b-bf3b-1d121e411d41
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 570
+      height: 416

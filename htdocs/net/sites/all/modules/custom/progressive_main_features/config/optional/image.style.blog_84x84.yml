@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: blog_84x84
+label: 'Blog (84x84)'
+effects:
+  780df66c-3905-4f1c-a948-0c48908adbcd:
+    uuid: 780df66c-3905-4f1c-a948-0c48908adbcd
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 84
+      height: 84

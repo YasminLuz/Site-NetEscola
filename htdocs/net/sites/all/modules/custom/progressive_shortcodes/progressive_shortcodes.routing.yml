@@ -1,0 +1,39 @@
+#   Social Icons Autocomplete
+progressive_shortcodes.ajax_social_icons_autocomplete:
+  path: '/admin/ajax/progressive_shortcodes/social_icons_autocomplete'
+  defaults:
+    _controller: '\Drupal\progressive_shortcodes\Controller\ProgressiveShortcodesController::ajax_social_icons_autocomplete'
+    _title: 'Ajax Social Icons Autocomplete'
+    _format: json
+  requirements:
+    _permission: 'administer nd nd_visualshortcodes'
+
+#   LivIcons Autocomplete
+progressive_shortcodes.ajax_livicons_autocomplete:
+  path: '/admin/ajax/progressive_shortcodes/livicons_autocomplete'
+  defaults:
+    _controller: '\Drupal\progressive_shortcodes\Controller\ProgressiveShortcodesController::ajax_livicons_autocomplete'
+    _title: 'Ajax LivIcons Autocomplete'
+    _format: json
+  requirements:
+    _permission: 'administer nd nd_visualshortcodes'
+
+#   FontAwesome Icons Autocomplete
+progressive_shortcodes.ajax_fontawesome_icons_autocomplete:
+  path: '/admin/ajax/progressive_shortcodes/fontawesome_icons_autocomplete'
+  defaults:
+    _controller: '\Drupal\progressive_shortcodes\Controller\ProgressiveShortcodesController::ajax_fontawesome_icons_autocomplete'
+    _title: 'Ajax Fontawesome Icons Autocomplete'
+    _format: json
+  requirements:
+    _permission: 'administer nd nd_visualshortcodes'
+
+#   Node Autocomplete
+progressive_shortcodes.ajax_node_autocomplete:
+  path: '/admin/ajax/progressive_shortcodes/node_autocomplete'
+  defaults:
+    _controller: '\Drupal\progressive_shortcodes\Controller\ProgressiveShortcodesController::ajax_node_autocomplete'
+    _title: 'Ajax Node Autocomplete'
+    _format: json
+  requirements:
+    _permission: 'administer nd nd_visualshortcodes'

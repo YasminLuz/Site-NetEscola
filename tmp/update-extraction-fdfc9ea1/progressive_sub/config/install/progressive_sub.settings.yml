@@ -1,0 +1,1143 @@
+features:
+  name: 1
+  node_user_picture: 1
+  comment_user_picture: 1
+  comment_user_verification: 1
+  main_menu: 1
+  retina: 0
+  favicon: 1
+logo:
+  use_default: 1
+favicon:
+  use_default: 1
+phones: '+1 (777) 123 45 67'
+boxed: 0
+mobile_menu_toggle: 1
+shop_link: shop
+shop_link_list: shop-list
+header_top_menu: 1
+language: 1
+account_login: 1
+wishlist: 1
+comparelist: 1
+cart_checkout: 1
+skin: home
+page_404: '1'
+pagination_type: 'pagination pagination-sm'
+nikadevs_cms_layout:
+  layout-default:
+    name: Default
+    pages: ''
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+        settings:
+          tag: div
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-right-sidebar:
+    name: 'Right Sidebar'
+    pages: "/node/65\n/blog\n/blog/*\n/somepage-with-right-sidebar"
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+          full_width: '1'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-9
+        settings:
+          tag: div
+      sidebar:
+        row_id: id-2
+        name: Sidebar
+        attributes:
+          id: sidebar
+          class:
+            - col-md-3
+        settings:
+          class: sidebar
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-left-sidebar:
+    name: 'Left Sidebar'
+    pages: /node/66
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+          full_width: '1'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-5:
+        name: Breadcrumbs
+        attributes:
+          id: id-5
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-9
+            - col-md-push-3
+        settings:
+          tag: div
+      sidebar:
+        row_id: id-2
+        name: Sidebar
+        attributes:
+          id: sidebar
+          class:
+            - col-md-3
+            - col-md-pull-9
+        settings:
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-about-us:
+    name: 'About Us'
+    pages: /node/67
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+        settings:
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-page-404:
+    name: 'Page 404'
+    pages: '/page-404*'
+    rows:
+      id-5:
+        name: Menu
+        attributes:
+          id: id-5
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-5
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+        settings:
+          padding_top: '10'
+          padding_bottom: '40'
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-project-slider:
+    name: 'Project Slider'
+    pages: /portfolio-1-column/slider
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+        settings:
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-product-page:
+    name: 'Product Page'
+    pages: '/shop*'
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-sm-12
+            - col-md-9
+        settings:
+          tag: div
+      sidebar:
+        row_id: id-2
+        name: Sidebar
+        attributes:
+          id: sidebar
+          class:
+            - col-sm-12
+            - col-md-3
+        settings:
+          tag: aside
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-full-width:
+    name: 'Full Width'
+    pages: /node/81
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          row_container: '0'
+          bg_image_type: '0'
+          full_width: '1'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+        settings:
+          tag: div
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+        settings:
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-full-width-only-menu:
+    name: 'Full Width Only Menu'
+    pages: "/node/106\n/node/107\n/node/108\n/node/109\n/node/110"
+    rows:
+      id-1:
+        name: Header
+        attributes:
+          id: id-1
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-2:
+        name: Content
+        attributes:
+          id: id-2
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          row_container: '0'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-1
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content_top:
+        row_id: id-2
+        name: 'Content Top'
+        attributes:
+          id: content_top
+          class:
+            - col-md-12
+      content:
+        row_id: id-2
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+        settings:
+          tag: div
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+  layout-one-page:
+    name: 'One Page'
+    pages: /node/111
+    rows:
+      id-5:
+        name: Team
+        attributes:
+          id: id-5
+          class:
+            - row
+        settings:
+          tag: div
+          bg_image_type: '0'
+          full_width: '1'
+          padding_top: '0'
+      id-6:
+        name: 'About Us'
+        attributes:
+          id: id-6
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+          padding_top: '70'
+          padding_bottom: '0'
+      id-7:
+        name: Team
+        attributes:
+          id: id-7
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+      id-8:
+        name: Works
+        attributes:
+          id: id-8
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+          padding_top: '10'
+          padding_bottom: '0'
+      id-9:
+        name: Services
+        attributes:
+          id: id-9
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+          padding_top: '30'
+      id-10:
+        name: 'Contact Us'
+        attributes:
+          id: id-10
+          class:
+            - row
+        settings:
+          tag: div
+          full_width: '1'
+          bg_image_type: '0'
+          padding_top: '0'
+          padding_bottom: '0'
+      id-3:
+        name: 'Footer Top'
+        attributes:
+          id: id-3
+          class:
+            - row
+            - footer-top
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-top
+      id-4:
+        name: 'Footer Bottom'
+        attributes:
+          id: id-4
+          class:
+            - row
+            - footer-bottom
+        settings:
+          tag: footer
+          row_container: '0'
+          bg_image_type: '0'
+          class: footer-bottom
+      id-0:
+        name: Hidden
+        attributes:
+          id: id-0
+          class:
+            - row
+            - sortable-parent
+    regions:
+      top:
+        row_id: id-5
+        name: Top
+        attributes:
+          id: top
+          class:
+            - col-md-12
+      content:
+        row_id: id-6
+        name: Content
+        attributes:
+          id: content
+          class:
+            - col-md-12
+      team:
+        row_id: id-7
+        name: Team
+        attributes:
+          id: team
+          class:
+            - col-md-12
+      works:
+        row_id: id-8
+        name: Works
+        attributes:
+          id: works
+          class:
+            - col-md-12
+      services:
+        row_id: id-9
+        name: Services
+        attributes:
+          id: services
+          class:
+            - col-md-12
+      contact_us:
+        row_id: id-10
+        name: 'Contact Us'
+        attributes:
+          id: contact_us
+          class:
+            - col-md-12
+      footer_top:
+        row_id: id-3
+        name: 'Footer Top'
+        attributes:
+          id: footer_top
+          class:
+            - col-md-12
+      footer:
+        row_id: id-4
+        name: Footer
+        attributes:
+          id: footer
+          class:
+            - col-md-12
+_core:
+  default_config_hash: lNxLfW962zd8SXgezFb7Cb5zM8KlPrncHONx7iHGGGM
+retina: 0
+header_top_fixed: 0
+gmap_key: AIzaSyDEE4w3qmvL1fF91KiHhySPYZNiULI0YRo
+page_404_content:
+  value: "[html format=\"ckeditor\" different_values=\"0\"]<p>The page you requested was not found, and we have a fine guess why.</p><ul>\t<li>\t\tIf you typed the URL directly, please make sure the spelling is correct.</li>\t<li>\t\tIf you clicked on a link to get here, the link is outdated.</li></ul><p><b>What can you do?</b></p><p>Have no fear, help is near! There are many ways you can get back on track with Store.</p><ul>\t<li>\t\t<a href=\"#\">Go back</a> to the previous page.</li>\t<li>\t\tUse the search bar at the top of the page to search for your products. Follow these links to get you back on track!</li>\t<li>\t\t<a href=\"#\">Store Home</a> | <a href=\"#\">My Account</a></li></ul>[/html]\r\n "
+  format: shortcode_dynamic
+maintenance_type: 'Coming Soon'
+under_construction_content:
+  value: '<h4>We are currently under construction!</h4><p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus mi urna, vehicula aliquam dapibus ornare, semper semper nisl. Duis tristique purus sit amet libero condimentum id consequat sem vehicula.  Donec ultricies nunc ac nulla sodales ac imperdiet purus euismod. Sed porta ante auctor accumsan.</p>'
+  format: shortcode_dynamic
+under_construction_left:
+  value: "[nd_webform webform=\"maintenance_subscribers\" different_values=\"0\"]\r\n[/nd_webform]\r\n "
+  format: shortcode_dynamic
+under_construction_phones: "<strong>Call Us:</strong> +1 (877) 123-45-67\r\n  <strong>or</strong> +1 (777) 123-45-67"
+under_construction_address: "49 Archdale, 2B Charleston 5655, Excel Tower\r\n  OPG Rpad, 4538FH"
+under_construction_bottom:
+  value: "<p>Follow us in social media</p>\r\n[social_box icon = \"icon-facebook\" link = \"http://facebook.com\"][/social_box]\r\n[social_box icon = \"icon-twitter\" link = \"http://facebook.com\"][/social_box]\r\n[social_box icon = \"icon-gplus\" link = \"http://facebook.com\"][/social_box]\r\n[social_box icon = \"icon-linkedin\" link = \"http://facebook.com\"][/social_box]"
+  format: shortcode_dynamic
+coming_soon_timer: '2017/10/25 10:00:00'
+coming_soon_content:
+  value: "[html]<p>We are currently working on a new website and won't take long. Please don't forget to check out our tweets and to subscribe to be notified!</p><hr>[/html]\r\n[nd_webform webform=\"maintenance_subscribers\" different_values=\"0\"]\r\n[/nd_webform]\r\n "
+  format: shortcode_dynamic
+coming_soon_bottom:
+  value: "<p>Follow us in social media</p>\r\n[social_box icon = \"icon-facebook\" link = \"http://facebook.com\"][/social_box]\r\n[social_box icon = \"icon-twitter\" link = \"http://facebook.com\"][/social_box]\r\n[social_box icon = \"icon-gplus\" link = \"http://facebook.com\"][/social_box]\r\n[social_box icon = \"icon-linkedin\" link = \"http://facebook.com\"][/social_box]\r\n"
+  format: shortcode_dynamic
+backgrounds:
+  -
+    pages: "/user/login\r\n/user/register\r\n/user/password\r\n/page-404-bg"
+    fid: '101'
+    blur: '0.5'
+    overlay: ''
+  -
+    pages: /content/under-construction
+    fid: '102'
+    blur: '0'
+    overlay: ''
+  -
+    pages: /content/coming-soon
+    fid: '24'
+    blur: '0'
+    overlay: ''
+  -
+    pages: /content/simple-boxed
+    fid: '103'
+    blur: '0'
+    overlay: ''

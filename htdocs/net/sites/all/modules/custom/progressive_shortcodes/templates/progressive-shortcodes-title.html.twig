@@ -1,0 +1,11 @@
+{% if page %}
+  <header {{ attrs|raw }}>
+    <div class="container">
+      <{{ tag }} class="title">{{ text }}</{{ tag }}>
+    </div>
+  </header>
+{% else %}
+  <div {{ attrs|raw }}>
+    <{{ tag }} class="title">{{ text }}</{{ tag }}>
+  </div>
+{% endif %}

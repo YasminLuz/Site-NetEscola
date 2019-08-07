@@ -1,0 +1,23 @@
+langcode: en
+status: false
+dependencies:
+  config:
+    - views.view.latest_posts
+  module:
+    - views
+  theme:
+    - progressive_sub
+id: views_block__latest_posts_block
+theme: progressive_sub
+region: footer
+weight: -13
+provider: null
+plugin: 'views_block:latest_posts-block'
+settings:
+  id: 'views_block:latest_posts-block'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility: {  }

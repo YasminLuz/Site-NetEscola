@@ -1,0 +1,32 @@
+<div class="image-box">
+  {% if corner_text is not empty %}
+    <span class="sale {{ corner_text|lower }}">
+      <span>{{ corner_text }}</span>
+    </span>
+  {% endif %}
+
+  <div class="general-img">
+    {{ image }}
+  </div><!-- .general-img -->
+
+  <div class="thumblist-box load">
+    <a href="#" class="prev">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
+      </svg>
+    </a>
+    <a href="#" class="next">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="1,0.001 0,1.001 7,8 0,14.999 1,15.999 9,8 "></polygon>
+      </svg>
+    </a>
+
+    <div id="thumblist" class="thumblist">
+      {% for item in small_images %}
+        <a href="#" data-image="{{ item.data_image }}" data-zoom-image="{{ item.data_zoom }}">
+          {{ item.small_img }}
+        </a>
+      {% endfor %}
+    </div><!-- #thumblist -->
+  </div><!-- .thumblist -->
+</div>

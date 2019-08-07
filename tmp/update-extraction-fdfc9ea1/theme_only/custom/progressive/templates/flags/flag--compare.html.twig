@@ -1,0 +1,48 @@
+{#
+/**
+ * @file
+ * Default theme implementation for flag links.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the link element.
+ * - title: The flag link title.
+ * - action: 'flag' or 'unflag'
+ * - flag: The flag object.
+ * - flaggable: The flaggable entity.
+ */
+#}
+{% spaceless %}
+  {# Attach the flag CSS library.#}
+  {{ attach_library('flag/flag.link') }}
+
+  {# Depending on the flag action, set the appropriate action class. #}
+  {#{% if action == 'unflag' %}#}
+    {#{% set action_class = 'action-unflag' %}#}
+  {#{% else %}#}
+    {#{% set action_class = 'action-flag' %}#}
+  {#{% endif %}#}
+
+  {# Set the remaining Flag CSS classes. #}
+  {%
+    set classes = [
+      'flag',
+      'flag-' ~ flag.id(),
+      'flag-' ~ flag.id() ~ '-' ~ flaggable.id(),
+      'flag-wrapper',
+      'flag-compare'
+    ]
+  %}
+
+  {# Set nofollow to prevent search bots from crawling anonymous flag links #}
+  {% set attributes = attributes.setAttribute('rel', 'nofollow') %}
+
+  <span class="{{classes|join(' ')}}">
+    <a{{ attributes }}>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+          <path fill="#1e1e1e" d="M16,3.063L13,0v2H1C0.447,2,0,2.447,0,3s0.447,1,1,1h12v2L16,3.063z"></path>
+        <path fill="#1e1e1e" d="M16,13.063L13,10v2H1c-0.553,0-1,0.447-1,1s0.447,1,1,1h12v2L16,13.063z"></path>
+        <path fill="#1e1e1e" d="M15,7H3V5L0,7.938L3,11V9h12c0.553,0,1-0.447,1-1S15.553,7,15,7z"></path>
+        </svg>
+    </a>
+  </span>
+{% endspaceless %}

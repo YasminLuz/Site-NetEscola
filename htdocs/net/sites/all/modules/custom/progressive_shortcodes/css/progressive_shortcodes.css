@@ -1,0 +1,32 @@
+/******************************************************************************
+  Word Rotate
+*******************************************************************************/
+.word-rotate {
+  background: #1e1e1e;
+  display: inline-block;
+  overflow: hidden;
+  padding: 0 8px;
+  text-align: center;
+  vertical-align: top;
+}
+.word-rotate:not(.border) {
+  color: #fff;
+}
+.word-rotate .words-box {
+  display: inline-block;
+  position: relative;
+}
+.word-rotate .words-box span {
+  display: block;
+  white-space: nowrap;
+}
+.word-rotate .words-box span + span {
+  display: none;
+}
+.word-rotate.loaded .words-box span + span {
+  display: block;
+}
+.word-rotate.border {
+  background: none;
+  border: 1px solid #1e1e1e;
+}

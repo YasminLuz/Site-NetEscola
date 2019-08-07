@@ -1,0 +1,25 @@
+{% if accordion_filter is not empty %}
+  <div class="filter-box accordions-filter">
+    <div class="btn-group filter-buttons filter-list">
+      <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+        {{ 'All'|t }} <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#" data-filter="*" class="active">{{ 'All'|t }}</a></li>
+        {% for plain, title in accordion_filter %}
+          <li>
+            <a href="#" data-filter=".{{ plain }}">{{ title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+      <div class="clearfix"></div>
+    </div>
+    <div {{ attrs|raw }} id="accordion{{ accordion_id }}">
+      {{ text|raw }}
+    </div>
+  </div>
+{% else %}
+  <div {{ attrs|raw }} id="accordion{{ accordion_id }}">
+    {{ text|raw }}
+  </div>
+{% endif %}

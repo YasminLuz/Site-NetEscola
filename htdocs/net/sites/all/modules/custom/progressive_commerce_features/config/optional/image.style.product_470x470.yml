@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: product_470x470
+label: 'Product (470x470)'
+effects:
+  47d6e189-1597-4144-b084-d3983d260c52:
+    uuid: 47d6e189-1597-4144-b084-d3983d260c52
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 470
+      height: 470

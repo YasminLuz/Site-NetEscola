@@ -1,0 +1,545 @@
+<?php
+
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\file\Entity\File;
+use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * @file
+ * Implements hook_page_attachments().
+ * @param array $attachments
+ */
+function progressive_shortcodes_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'progressive_shortcodes/rewriting';
+}
+
+/**
+ * Implements hook_theme().
+ */
+function progressive_shortcodes_theme() {
+  return [
+    'progressive_shortcodes_quote_blockquote' => [
+      'variables' => [
+        'attrs' => '',
+        'author' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_quote_no_blockquote' => [
+      'variables' => [
+        'attrs' => '',
+        'img' => '',
+        'h' => '',
+        'author' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_testimonial' => [
+      'variables' => [
+        'attrs' => '',
+        'class' => '',
+        'text' => '',
+        'img' => '',
+        'author' => '',
+        'author_info' => '',
+      ],
+    ],
+    'progressive_shortcodes_progress' => [
+      'variables' => [
+        'attrs' => '',
+        'percent' => '',
+        'color' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_progress_circle' => [
+      'variables' => [
+        'attrs' => '',
+        'percent' => '',
+        'line_color' => '',
+      ],
+    ],
+    'progressive_shortcodes_progress_spacer' => [
+      'variables' => [
+        'attrs' => '',
+      ],
+    ],
+    'progressive_shortcodes_message' => [
+      'variables' => [
+        'attrs' => '',
+        'icon' => '',
+        'dismissable' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_button' => [
+      'variables' => [
+        'attrs' => '',
+        'icon' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_service_box_left_small' => [
+      'variables' => [
+        'attrs' => '',
+        'link' => '',
+        'target' => '',
+        'icon' => '',
+        'title' => '',
+        'inner_icon_animation' => '',
+        'inner_animation' => '',
+        'link_text' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_service_box_left_medium' => [
+      'variables' => [
+        'attrs' => '',
+        'link' => '',
+        'target' => '',
+        'icon' => '',
+        'title' => '',
+        'inner_icon_animation' => '',
+        'inner_animation' => '',
+        'link_text' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_service_box_left_big' => [
+      'variables' => [
+        'attrs' => '',
+        'link' => '',
+        'target' => '',
+        'icon' => '',
+        'title' => '',
+        'inner_icon_animation' => '',
+        'inner_animation' => '',
+        'link_text' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_service_box_center_big' => [
+      'variables' => [
+        'attrs' => '',
+        'link' => '',
+        'target' => '',
+        'icon' => '',
+        'title' => '',
+        'inner_icon_animation' => '',
+        'inner_animation' => '',
+        'link_text' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_social_box' => [
+      'variables' => [
+        'attrs' => '',
+        'link' => '',
+      ],
+    ],
+    'progressive_shortcodes_pricing_table' => [
+      'variables' => [
+        'attrs' => '',
+        'stars' => '',
+        'link' => '',
+        'title' => '',
+        'livicon' => '',
+        'color' => '',
+        'data_s' => '',
+        'icon_color' => '',
+        'description' => '',
+        'price_top_text' => '',
+        'price' => '',
+        'price_text' => '',
+        'pricing_table_rows' => '',
+        'read_more' => '',
+        'read_more_link' => '',
+        'button' => '',
+        'button_class' => '',
+      ],
+    ],
+    'progressive_shortcodes_pricing_table_row' => [
+      'variables' => [
+        'attrs' => '',
+        'checked' => '',
+        'title' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_quicklinks' => [
+      'variables' => [
+        'tree' => '',
+      ],
+    ],
+//    'progressive_shortcodes_quicklinks_items' => [
+//      'variables' => [
+//        'ul_class' => '',
+//        'li_class' => '',
+//        'item_list' => '',
+//        'title' => '',
+//      ],
+//    ],
+    'progressive_shortcodes_quicklinks_drop_down' => [
+      'variables' => [
+        'links' => '',
+      ],
+    ],
+    'progressive_shortcodes_video' => [
+      'variables' => [
+        'attrs' => '',
+        'video_url' => '',
+        'iframe_attrs' => '',
+      ],
+    ],
+    'progressive_shortcodes_contact' => [
+      'variables' => [
+        'attrs' => '',
+        'content' => '',
+      ],
+    ],
+    'progressive_shortcodes_slider_container' => [
+      'variables' => [
+        'attrs' => '',
+        'pagination' => '',
+        'pagination_switches' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_slider_item' => [
+      'variables' => [
+        'attrs' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_sequence_item' => [
+      'variables' => [
+        'attrs' => '',
+        'inner_attrs' => '',
+        'bg_img' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_accordion_container' => [
+      'variables' => [
+        'attrs' => '',
+        'accordion_id' => '',
+        'accordion_filter' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_accordion_item' => [
+      'variables' => [
+        'attrs' => '',
+        'accordion_id' => '',
+        'accordion_count' => '',
+        'title' => '',
+        'active' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_image' => [
+      'variables' => [
+        'attrs' => '',
+        'filename' => '',
+        'img_class' => '',
+        'alt' => '',
+        'title' => '',
+        'zoom' => '',
+        'caption' => '',
+      ],
+    ],
+    'progressive_shortcodes_gmap' => [
+      'variables' => [
+        'attrs' => '',
+        'is_map_overlay' => '',
+        'height' => '',
+        'zoom' => '',
+        'lat' => '',
+        'lng' => '',
+        'marker' => '',
+        'type' => '',
+        'title' => '',
+        'is_marker_tooltip' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_tabs_container' => [
+      'variables' => [
+        'attrs' => '',
+        'tab_content' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_tab_item' => [
+      'variables' => [
+        'attrs' => '',
+        'tab_counter' => '',
+        'icon' => '',
+        'title' => '',
+      ],
+    ],
+    'progressive_shortcodes_tab_item_tab_content' => [
+      'variables' => [
+        'class' => '',
+        'tab_counter' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_hr' => [
+      'variables' => [
+        'attrs' => '',
+      ],
+    ],
+    'progressive_shortcodes_title' => [
+      'variables' => [
+        'attrs' => '',
+        'tag' => '',
+        'page' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_sitemap' => [
+      'variables' => [
+        'attrs' => '',
+        'menu_tree' => '',
+      ],
+    ],
+    'progressive_shortcodes_container' => [
+      'variables' => [
+        'attrs' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_row' => [
+      'variables' => [
+        'attrs' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_col' => [
+      'variables' => [
+        'attrs' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_sequence_container' => [
+      'variables' => [
+        'attrs' => '',
+        'text' => '',
+      ],
+    ],
+    'progressive_shortcodes_spacer' => [
+      'variables' => [
+        'attrs' => '',
+      ],
+    ],
+    'progressive_shortcodes_textrotation' => [
+      'variables' => [
+        'attrs' => '',
+        'tag' => '',
+        'words' => '',
+        'words_prefix' => '',
+        'words_suffix' => '',
+      ],
+    ],
+  ];
+}
+
+/**
+ * @param $string
+ * @return mixed
+ */
+function restore_html_string($string) {
+  return str_replace(['|LS|', '|RS|', '|LF|', '|RF|', '|{', '|}'], ['[', ']', '{', '}', '<', '>'], $string);
+}
+
+/**
+ * @return array
+ */
+function return_taxonomy_vocabularies() {
+  $array = [];
+  foreach (Vocabulary::loadMultiple() as $vocabulary) {
+    $array[$vocabulary->get('vid')] = $vocabulary->get('name');
+  }
+  return $array;
+}
+
+/**
+ * @param string $class
+ * @return array
+ */
+function _progressive_shortcodes_body_class($class = '') {
+  static $classes;
+  $classes = empty($classes) ? [] : $classes;
+  $classes[] = $class;
+  return $classes;
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function progressive_theme_registry_alter(&$theme_registry) {
+  $theme_registry['menu']['variables']['sub_class'] = '';
+}
+
+/**
+ * @param $attrs
+ * @return string
+ */
+function _progressive_shortcodes_shortcode_attributes($attrs) {
+  if(empty($attrs) || !is_array($attrs)) {
+    return '';
+  }
+  $allowed_attributes = [
+    'class' => 'class',
+    'extra_classes' => 'class',
+    'href' => 'href',
+    'id' => 'id',
+    'animation' => 'data-appear-animation',
+    'animation_delay' => 'data-appear-animation-delay',
+    'style' => 'style',
+    'extra_style' => 'style',
+    'target' => 'target',
+  ];
+  if (isset($attrs['link']) && $attrs['link'] == \Drupal::service('path.current')->getPath()) {
+    $attrs['class'] = (isset($attrs['class']) ? $attrs['class'] : '') . ' active';
+  }
+  if (isset($attrs['animation'])) {
+    $attrs['class'] = (isset($attrs['class']) ? $attrs['class'] : '') . ' appear-animation';
+  }
+  $output = '';
+  $attrs_array = [];
+  foreach ($attrs as $name => $value) {
+    $value = trim($value);
+    if (strpos($name, 'style_') === 0) {
+      $value_style = str_replace(['style_', '_'], ['', '-'], $name);
+      if (strpos($value_style, 'border-radius') !== FALSE) {
+        $value = strpos($value, '%') !== FALSE ? $value : (int)$value . 'px;';
+        $value = '-webkit-' . $value_style. ': ' . $value . '; -moz-' . $value_style. ': ' . $value . '; ' . $value_style. ': ' . $value . ';';
+      }
+      elseif (strpos($name, 'margin') !== FALSE || strpos($name, 'padding') !== FALSE || strpos($name, 'width') !== FALSE || strpos($name, 'height') !== FALSE) {
+        $value = strpos($value, '%') !== FALSE ? $value : (int)$value . 'px;';
+        $value = $value_style . ': ' . $value;
+      }
+      elseif (strpos($name, 'color') !== FALSE) {
+        $value = $value_style . ': #' . trim($value, '#') . ';';
+      }
+      elseif (strpos($value_style, 'image') !== FALSE) {
+        $file = File::load($value);
+        $filename = $file ? file_create_url($file->getFileUri()) : '';
+        $value = $value_style . ': url("' . $filename . '");';
+      }
+      else {
+        $value = $value_style . ': ' . $value . ';';
+      }
+      $name = 'style';
+    }
+    if (isset($allowed_attributes[$name])) {
+      $name = $allowed_attributes[$name];
+      if ($value !== '') {
+        $attrs_array[$name] = (isset($attrs_array[$name]) ? $attrs_array[$name] . ' ' : '') . $value;
+      }
+    }
+    elseif (strpos($name, 'data-') === 0) {
+      if ($value !== '') {
+        $attrs_array[$name] = (isset($attrs_array[$name]) ? $attrs_array[$name] . ' ' : '') . $value;
+      }
+    }
+  }
+  if (isset($attrs['style_background_color']) && strtolower(trim($attrs['style_background_color'], '#')) == '000000') {
+    $attrs_array['class'] = (isset($attrs_array['class']) ? $attrs_array['class'] : '') . ' text-white';
+  }
+  if (isset($attrs['style_background_color']) && strtolower(trim($attrs['style_background_color'], '#')) == 'ffffff') {
+    $attrs_array['class'] = (isset($attrs_array['class']) ? $attrs_array['class'] : '') . ' text-black';
+  }
+  if (isset($attrs['text_align']) && $attrs['text_align']) {
+    $attrs_array['style'] = (isset($attrs_array['style']) ? $attrs_array['style'] : '') . ' text-align:'. $attrs['text_align'] . ';';
+  }
+
+  foreach ($attrs_array as $name => $value) {
+    $output .= " $name = '$value'";
+  }
+  return $output;
+}
+
+/**
+ * @param string $image
+ * @param int $collect
+ * @return array|string
+ */
+function _progressive_shortcodes_shortcode_slider_pager_image($image = '', $collect = 0) {
+  static $pager;
+  $return = '';
+  if (!$pager) {
+    $pager = [];
+  }
+  if ($image) {
+    $pager[] = $image;
+  }
+  else {
+    $return = $pager;
+    $pager = [];
+  }
+  return $return;
+}
+
+/**
+ * Provides a class parameter helper function.
+ *
+ * @param mixed $class
+ *   The class string or array
+ *
+ * @param string $default
+ *   The default class value.
+ *
+ * @return string
+ *   The proper classes string.
+ */
+function progressive_shortcode_add_class($class = '', $default = '') {
+  if ($class) {
+    if (!is_array($class)) {
+      $class = explode(' ', $class);
+    }
+    array_unshift($class, $default);
+    $class = array_unique($class);
+  }
+  else {
+    $class = array($default);
+  }
+  return implode(' ', $class);
+}
+
+/**
+ * @param $menu_items
+ * @return array
+ */
+function _progressive_shortcodes_simple_menu($menu_items) {
+  $links = [];
+  if (is_array($menu_items) && !empty($menu_items)) {
+    // @todo: global $links for sub menus building.
+    global $links;
+    foreach ($menu_items as $item) {
+      $link_url = Url::fromRoute($item['url']->getRouteName());
+      if (!empty($item['below'])) {
+        $icon_text = t('<span class="open-sub"></span>' . $item['title']);
+        $generated_link = \Drupal::service('link_generator')
+          ->generate($icon_text, $link_url)
+          ->getGeneratedLink();
+        $links[] = '<li class="parent">' . $generated_link . '<ul class="sub">';
+        _progressive_shortcodes_simple_menu($item['below']);
+        $links[] = '</ul></li>';
+      }
+      else {
+        $link = Link::fromTextAndUrl($item['title'], $link_url)->toString();
+        $links[] = '<li>' . $link->getGeneratedLink() . '</li>';
+      }
+    }
+  }
+  return [
+    '#theme' => 'progressive_shortcodes_quicklinks_drop_down',
+    '#links' => $links,
+  ];
+}
+

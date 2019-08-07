@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.people.body
+    - field.field.node.people.field_email
+    - field.field.node.people.field_image
+    - field.field.node.people.field_phone
+    - field.field.node.people.field_position
+    - field.field.node.people.field_social_icons
+    - node.type.people
+  module:
+    - text
+    - user
+id: node.people.teaser
+targetEntityType: node
+bundle: people
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 0
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_email: true
+  field_image: true
+  field_phone: true
+  field_position: true
+  field_social_icons: true
+  langcode: true
+  links: true

@@ -1,0 +1,988 @@
+<?php
+
+use Drupal\file\Entity\File;
+use Drupal\Core\Template\Attribute;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param null $form_id
+ */
+function progressive_form_system_theme_settings_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state, $form_id = NULL) {
+  $form['#attached']['library'][] = 'progressive/theme-settings-styling';
+  // Work-around for a core bug affecting admin themes. See issue #943212.
+  if (isset($form_id)) {
+    return;
+  }
+
+  $form['options'] = [
+    '#type' => 'vertical_tabs',
+    '#default_tab' => 'nikadevs_layout_builder',
+    '#weight' => '-10',
+    '#title' => t('Progressive Theme settings'),
+  ];
+
+  $moduleHandler = \Drupal::service('module_handler');
+  if ($moduleHandler->moduleExists('nikadevs_cms')) {
+    $form['nikadevs_layout_builder'] = [
+      '#type' => 'details',
+      '#title' => t('Layout Builder'),
+      '#group' => 'options',
+    ];
+    $form['nikadevs_layout_builder']['layout_builder'] = nikadevs_cms_layout_builder();
+  }
+  else {
+    drupal_set_message('Enable NikaDevs CMS module to use layout builder.');
+  }
+
+  // Main details.
+  $form['main'] = [
+    '#type' => 'details',
+    '#title' => t('Main settings'),
+    '#group' => 'options',
+  ];
+  $skins = [
+    'elements',
+    'home',
+    'pages',
+    'shop-5',
+    'shop-6',
+    'shop-8',
+    'shop',
+  ];
+  $form['main']['skin'] = [
+    '#type' => 'radios',
+    '#title' => t('Skin'),
+    '#options' => array_combine($skins, $skins),
+    '#default_value' => theme_get_setting('skin'),
+    '#attributes' => [
+      'class' => ['color-radios'],
+    ],
+  ];
+  $form['main']['retina'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable Retina Script'),
+    '#default_value' => theme_get_setting('retina'),
+    '#description' => t("Only for retina displays and for manually added images. The script will check if the same image with suffix @2x exists and will show it."),
+  ];
+  $form['main']['boxed'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Boxed view'),
+    '#default_value' => theme_get_setting('boxed'),
+  ];
+  $form['main']['mobile_menu_toggle'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Easy mobile main menu dropdown toggle'),
+    '#description' => t('If not checked then dropdown menu will be showed only if the user clicked on the + sign.'),
+    '#default_value' => theme_get_setting('mobile_menu_toggle'),
+  ];
+  $form['main']['header_top_menu'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Header Top Menu'),
+    '#default_value' => theme_get_setting('header_top_menu'),
+  ];
+  $form['main']['header_top_menu_wrap'] = [
+    '#type' => 'container',
+    '#states' => [
+      'visible' => [
+        ':input[name="header_top_menu"]' => ['checked' => TRUE],
+      ],
+    ],
+  ];
+  $form['main']['header_top_menu_wrap']['header_top_fixed'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Header Top Fixed Position'),
+    '#default_value' => theme_get_setting('header_top_fixed'),
+  ];
+  $form['main']['header_top_menu_wrap']['language'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Language Block'),
+    '#default_value' => theme_get_setting('language'),
+    '#prefix' => '<div class = "row"><div class = "col-sm-2">'
+  ];
+  $form['main']['header_top_menu_wrap']['account_login'] = [
+    '#type' => 'checkbox',
+    '#title' => t('My Account & Login'),
+    '#default_value' => theme_get_setting('account_login'),
+    '#prefix' => '</div><div class = "col-sm-2">'
+  ];
+  $form['main']['header_top_menu_wrap']['wishlist'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Wishlist'),
+    '#default_value' => theme_get_setting('wishlist'),
+    '#prefix' => '</div><div class = "col-sm-2">'
+  ];
+  $form['main']['header_top_menu_wrap']['comparelist'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Compare list'),
+    '#default_value' => theme_get_setting('comparelist'),
+    '#prefix' => '</div><div class = "col-sm-2">'
+  ];
+  $form['main']['header_top_menu_wrap']['cart_checkout'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Cart & Checkout'),
+    '#default_value' => theme_get_setting('cart_checkout'),
+    '#prefix' => '</div><div class = "col-sm-2">',
+    '#suffix' => '</div></div>'
+  ];
+  $form['main']['shop_link'] = [
+    '#type' => 'textfield',
+    '#title' => t('Shop Link'),
+    '#default_value' => theme_get_setting('shop_link'),
+  ];
+  $form['main']['shop_link_list'] = [
+    '#type' => 'textfield',
+    '#title' => t('Shop Link, style List'),
+    '#default_value' => theme_get_setting('shop_link_list'),
+  ];
+  $form['main']['phones'] = [
+    '#type' => 'textfield',
+    '#title' => t('Main phone'),
+    '#default_value' => theme_get_setting('phones'),
+  ];
+
+  // Gmap.
+  $form['gmap'] = [
+    '#type' => 'details',
+    '#title' => t('Google Map Settings'),
+    '#group' => 'options',
+  ];
+  $form['gmap']['gmap_key'] = [
+    '#type' => 'textfield',
+    '#title' => t('Google Maps API Key'),
+    '#default_value' => theme_get_setting('gmap_key') ? theme_get_setting('gmap_key') : '',
+    '#description' => 'More information: <a href = "https://developers.google.com/maps/documentation/javascript/get-api-key">https://developers.google.com/maps/documentation/javascript/get-api-key</a>'
+  ];
+
+  // 404.
+  $form['settings_404'] = [
+    '#type' => 'details',
+    '#title' => t('Page not Found'),
+    '#group' => 'options',
+  ];
+  $form['settings_404']['page_404'] = [
+    '#type' => 'select',
+    '#title' => t('Page 404'),
+    '#default_value' => theme_get_setting('page_404'),
+    '#options' => [
+      1 => t('404 in Circle'),
+      2 => t('404 in Circle with text'),
+      3 => t('Background page')
+    ],
+    '#description'   => t("Type of the 'Page not Found'"),
+  ];
+  $page_404_content = theme_get_setting('page_404_content');
+  $form['settings_404']['container'] = [
+    '#type' => 'container',
+    '#states' => [
+      'visible' => [
+        ':input[name="page_404"]' => ['value' => 2],
+      ],
+    ],
+  ];
+  $form['settings_404']['container']['page_404_content'] = [
+    '#type' => 'text_format',
+    '#title' => t('Page 404 Content'),
+    '#format' => isset($page_404_content['format']) ? $page_404_content['format'] : NULL,
+    '#default_value' => isset($page_404_content['value']) ? $page_404_content['value'] : '',
+  ];
+
+  // Maintenance.
+  $form['maintenance'] = [
+    '#type' => 'details',
+    '#title' => t('Maintenance Page'),
+    '#group' => 'options',
+  ];
+  $form['maintenance']['maintenance_type'] = [
+    '#type' => 'select',
+    '#title' => t('Maintenance page type'),
+    '#default_value' => theme_get_setting('maintenance_type'),
+    '#options' => [
+      'Coming Soon' => t('Coming Soon'),
+      'Under Construction' => t('Under Construction'),
+    ],
+  ];
+  $form['maintenance']['container_construction'] = [
+    '#type' => 'container',
+    '#states' => [
+      'visible' => [
+        ':input[name="maintenance_type"]' => ['value' => t('Under Construction')],
+      ],
+    ],
+  ];
+  $under_construction_content = theme_get_setting('under_construction_content');
+  $form['maintenance']['container_construction']['under_construction_content'] = [
+    '#type' => 'text_format',
+    '#title' => t('Under Construction Content'),
+    '#format' => isset($under_construction_content['format']) ? $under_construction_content['format'] : $under_construction_content,
+    '#default_value' => isset($under_construction_content['value']) ? $under_construction_content['value'] : 'html',
+  ];
+  $under_construction_left = theme_get_setting('under_construction_left');
+  $form['maintenance']['container_construction']['under_construction_left'] = [
+    '#type' => 'text_format',
+    '#title' => t('Under Construction Left Content'),
+    '#format' => isset($under_construction_left['format']) ? $under_construction_left['format'] : NULL,
+    '#default_value' => isset($under_construction_left['value']) ? $under_construction_left['value'] : '',
+  ];
+  $form['maintenance']['container_construction']['under_construction_phones'] = [
+    '#type' => 'textarea',
+    '#rows' => 2,
+    '#title' => t('Under Construction Phones'),
+    '#default_value' => theme_get_setting('under_construction_phones'),
+  ];
+  $form['maintenance']['container_construction']['under_construction_address'] = [
+    '#type' => 'textarea',
+    '#title' => t('Under Construction Address'),
+    '#rows' => 2,
+    '#default_value' => theme_get_setting('under_construction_address'),
+  ];
+  $under_construction_bottom = theme_get_setting('under_construction_bottom');
+  $form['maintenance']['container_construction']['under_construction_bottom'] = [
+    '#type' => 'text_format',
+    '#title' => t('Under Construction Bottom'),
+    '#format' => isset($under_construction_bottom['format']) ? $under_construction_bottom['format'] : NULL,
+    '#default_value' => isset($under_construction_bottom['value']) ? $under_construction_bottom['value'] : '',
+  ];
+  // Coming Soon with Timer
+  $form['maintenance']['container_coming_soon'] = [
+    '#type' => 'container',
+    '#states' => [
+      'visible' => [
+        ':input[name="maintenance_type"]' => ['value' => 'Coming Soon'],
+      ],
+    ],
+  ];
+  $form['maintenance']['container_coming_soon']['coming_soon_timer'] = [
+    '#type' => 'textfield',
+    '#title' => t('Countdown time'),
+    '#description' => t('Any time format, for example: 2014/12/29 10:00:00'),
+    '#default_value' => theme_get_setting('coming_soon_timer'),
+    '#states' => [
+      'visible' => [
+        ':input[name="maintenance_type"]' => ['value' => 'Coming Soon'],
+      ],
+    ],
+  ];
+  $coming_soon_content = theme_get_setting('coming_soon_content');
+  $form['maintenance']['container_coming_soon']['coming_soon_content'] = [
+    '#type' => 'text_format',
+    '#title' => t('Coming Soon Content'),
+    '#format' => isset($coming_soon_content['format']) ? $coming_soon_content['format'] : NULL,
+    '#default_value' => isset($coming_soon_content['value']) ? $coming_soon_content['value'] : '',
+  ];
+  $coming_soon_bottom = theme_get_setting('coming_soon_bottom');
+  $form['maintenance']['container_coming_soon']['coming_soon_bottom'] = [
+    '#type' => 'text_format',
+    '#title' => t('Coming Soon Bottom'),
+    '#format' => isset($coming_soon_bottom['format']) ? $coming_soon_bottom['format'] : NULL,
+    '#default_value' => isset($coming_soon_bottom['value']) ? $coming_soon_bottom['value'] : '',
+  ];
+
+  // Page Backgrounds.
+  $form['page_background_settings'] = [
+    '#type' => 'details',
+    '#title' => t('Page Backgrounds'),
+    '#group' => 'options',
+  ];
+
+  $header = [
+    t('Pages'),
+    t('Background'),
+    t('Blur'),
+    t('Overlay'),
+  ];
+  $form['page_background_settings']['backgrounds'] =[
+    '#type' => 'table',
+    '#header' => $header,
+  ];
+  for ($i = 0; $i < 4; $i++) {
+    progressive_get_page_background_settings_row($form, $i);
+  }
+
+  $form['#submit'][] = 'progressive_settings_submit';
+}
+
+/**
+ * @param $theme_form
+ * @param $increment
+ */
+function progressive_get_page_background_settings_row(&$theme_form, $increment) {
+  $overlays = [
+    '' => t('None'),
+    'bg-dark-alfa-10' => t('Dark 10'),
+    'bg-dark-alfa-20' => t('Dark 20'),
+    'bg-dark-alfa-30' => t('Dark 30'),
+    'bg-dark-alfa-40' => t('Dark 40'),
+    'bg-dark-alfa-50' => t('Dark 50'),
+    'bg-dark-alfa-60' => t('Dark 60'),
+    'bg-dark-alfa-70' => t('Dark 70'),
+    'bg-dark-alfa-80' => t('Dark 80'),
+    'bg-dark-alfa-90' => t('Dark 90'),
+  ];
+  $blur_deeps = [];
+  for ($d = 0; $d <= 10; $d++) {
+    $res = $d / 10;
+    $blur_deeps[(string) $res] = $res;
+  }
+  $theme_form['page_background_settings']['backgrounds'][$increment]['pages'] = [
+    '#type' => 'textarea',
+    '#rows' => 3,
+    '#title' => t('Show for the listed page'),
+    '#title_display' => 'invisible',
+    '#default_value' => theme_get_setting('backgrounds')[$increment]['pages'],
+    '#attributes' => [
+      'placeholder' => t('Show for the listed page'),
+    ],
+  ];
+  $theme_form['page_background_settings']['backgrounds'][$increment]['fid'] = [
+    '#type' => 'textfield',
+    '#title' => t('Image'),
+    '#title_display' => 'invisible',
+    '#default_value' => theme_get_setting('backgrounds')[$increment]['fid'],
+    '#prefix' => '<div class="row"><div class="col-sm-6"><div class="image-gallery-upload ">',
+    '#suffix' => '</div></div>',
+    '#attributes' => ['class' => ['image-gallery-upload hidden']],
+    '#field_suffix' => '<div class="preview-image"></div><a href="#" class="vc-gallery-images-select button">' . t('Upload Image') .'</a><a href="#" class="gallery-remove button">' . t('Remove Image') .'</a>'
+  ];
+  if (!empty(theme_get_setting('backgrounds')[$increment]['fid'])) {
+    $fid = theme_get_setting('backgrounds')[$increment]['fid'];
+    $file = File::load($fid);
+    if ($file) {
+      $filename = $file->getFileUri();
+      $filename = ImageStyle::load('medium')->buildUrl($filename);
+      $theme_form['page_background_settings']['backgrounds'][$increment]['fid']['#prefix'] = '<div class="row"><div class="col-sm-6"><div class="image-gallery-upload has_image">';
+      $theme_form['page_background_settings']['backgrounds'][$increment]['fid']['#field_suffix'] = '<div class="preview-image"><img src="' . $filename . '"></div><a href="#" class="vc-gallery-images-select button">' . t('Upload Image') .'</a><a href="#" class="gallery-remove button">' . t('Remove Image') .'</a>';
+    }
+  }
+  $theme_form['page_background_settings']['backgrounds'][$increment]['blur'] = [
+    '#type' => 'select',
+    '#title' => t('Blur'),
+    '#title_display' => 'invisible',
+    '#options' => $blur_deeps,
+    '#default_value' => theme_get_setting('backgrounds')[$increment]['blur'],
+    '#description' => t('Example: 0.5'),
+  ];
+  $theme_form['page_background_settings']['backgrounds'][$increment]['overlay'] = [
+    '#type' => 'select',
+    '#title' => t('Overlay'),
+    '#title_display' => 'invisible',
+    '#options' => $overlays,
+    '#default_value' => theme_get_setting('backgrounds')[$increment]['overlay'],
+  ];
+}
+
+/**
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function progressive_settings_submit($form, FormStateInterface $form_state) {
+  $page_404 = $form_state->getValue('page_404') == 3 ? 'page-404-bg' : 'page-404';
+  \Drupal::configFactory()
+    ->getEditable('progressive_cms.settings')
+    ->set('site_404', $page_404)
+    ->save();
+
+  $items = $form_state->getValue('backgrounds');
+  $current_theme = \Drupal::config('system.theme')->get('default');
+  \Drupal::configFactory()
+    ->getEditable('progressive_cms.settings')
+    ->set('background_' . $current_theme, $items)
+    ->save();
+}
+
+/**
+ * Implementation of hook_preprocess_page().
+ * @param $variables
+ */
+function progressive_preprocess_block(&$variables) {
+  if (strpos($variables['derivative_plugin_id'], 'latest_posts') === 0) {
+    $variables['title_prefix']['read_more']['#markup'] = '<a href="/blog" class="btn btn-default">' . t('All posts') . ' <i class="icon-arrow-right icon-white"></i></a>';
+  }
+}
+
+/**
+ * Implements theme_field()
+ *
+ * @param $variables
+ * @return string
+ */
+function progressive_field__field_specifications($variables) {
+  $output = '';
+  if (count($variables['items'])) {
+    $output .= '<ul>';
+    foreach ($variables['items'] as $item) {
+      $output .= '<li>' . render($item['content']) . '</li>';
+    }
+    $output .= '</ul>';
+  }
+  return $output;
+}
+
+/**
+ * Implements theme_field()
+ *
+ * @param $variables
+ * @return string
+ */
+function progressive_field__field_social_icons($variables) {
+  $output = '';
+  if (count($variables['items'])) {
+    $output .= '<div class="social">';
+    foreach ($variables['items'] as $item) {
+      $output .= '<div class="item">';
+      $output .= '<a class="sbtnf sbtnf-rounded color color-hover ' . $item['content']['#title'] . '" href="' . $item['content']['#url']->toString() . '" target="_blank"></a>';
+      $output .= '</div>';
+    }
+    $output .= '</div>';
+  }
+  return $output;
+}
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * @param $elements
+ */
+function progressive_element_info_alter(&$elements) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  if (isset($current_path) && strpos($current_path, 'ajax') !== FALSE) {
+    return;
+  }
+  foreach ($elements as &$element) {
+    $element['#process'][] = '_progressive_process_element';
+    if (!empty($element['#input'])) {
+      $element['#process'][] = '_progressive_process_input';
+    }
+  }
+}
+
+/**
+ * @param $element
+ * @return mixed
+ */
+function _progressive_process_element($element) {
+  if (!empty($element['#attributes']['class']) && is_array($element['#attributes']['class'])) {
+    if (in_array('container-inline', $element['#attributes']['class'])) {
+      $element['#attributes']['class'][] = 'form-inline';
+    }
+    if (in_array('form-wrapper', $element['#attributes']['class'])) {
+      $element['#attributes']['class'][] = 'form-group';
+    }
+  }
+  return $element;
+}
+
+/**
+ * @param $element
+ * @return mixed
+ */
+function _progressive_process_input($element) {
+  $types = [
+    'textarea',
+    'textfield',
+    'email',
+    'webform_email',
+    'webform_number',
+    'select',
+    'password',
+    'password_confirm',
+    'search',
+    'number',
+  ];
+  if (!empty($element['#type']) && (in_array($element['#type'], $types))) {
+    $element['#attributes']['class'][] = 'form-control';
+  }
+  if (!empty($element['#type']) && $element['#type'] == 'submit') {
+    $element['#attributes']['class'][] = 'btn';
+  }
+  return $element;
+}
+
+/**
+ * Prepares variables for input templates.
+ *
+ * Default template: input.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array containing the properties of the element.
+ *     Properties used: #attributes.
+ */
+function progressive_preprocess_input(&$variables) {
+  $element = $variables['element'];
+  // Remove name attribute if empty, for W3C compliance.
+  if (isset($variables['attributes']['name']) && empty((string) $variables['attributes']['name'])) {
+    unset($variables['attributes']['name']);
+  }
+  $variables['children'] = $element['#children'];
+//  $variables['label'] = isset($element['#title']) ? $element['#title'] : '';
+  $variables['nd_icon'] = isset($element['#nd_icon']) ? '<span class="' . $element['#nd_icon'] . ' form-control-feedback c-font-grey"></span>' : '';
+}
+
+/**
+ * Implements theme_form_element().
+ *
+ * @param $variables
+ * @return string
+ */
+function progressive_form_element($variables) {
+  $element = &$variables['element'];
+  $is_checkbox = FALSE;
+  $is_radio = FALSE;
+  $element += [
+    '#title_display' => 'before',
+  ];
+  if (isset($element['#markup']) && !empty($element['#id'])) {
+    $attributes['id'] = $element['#id'];
+  }
+//  if (isset($element['#parents']) && \Drupal::formBuilder()->getError($element)) {
+  if (isset($element['#parents'])) {
+    $attributes['class'][] = 'error';
+  }
+  if (!empty($element['#type'])) {
+    $attributes['class'][] = 'form-type-' . strtr($element['#type'], '_', '-');
+  }
+  if (!empty($element['#name'])) {
+    $attributes['class'][] = 'form-item-' . strtr($element['#name'],[
+        ' ' => '-',
+        '_' => '-',
+        '[' => '-',
+        ']' => '',
+      ]);
+  }
+  if (!empty($element['#attributes']['disabled'])) {
+    $attributes['class'][] = 'form-disabled';
+  }
+  if (!empty($element['#autocomplete_path']) && \Drupal::service('path.validator')->isValid($element['#autocomplete_path'])) {
+    $attributes['class'][] = 'form-autocomplete';
+  }
+  $attributes['class'][] = 'form-item';
+  if (isset($element['#type'])) {
+    if ($element['#type'] == "radio") {
+      $attributes['class'][] = 'radio';
+      $is_radio = TRUE;
+    }
+    elseif ($element['#type'] == "checkbox") {
+      $attributes['class'][] = 'checkbox';
+      $is_checkbox = TRUE;
+    }
+    else {
+      $attributes['class'][] = 'form-group';
+    }
+  }
+  $output = '<div' . new Attribute($attributes) . '>' . "\n";
+  if (!isset($element['#title'])) {
+    $element['#title_display'] = 'none';
+  }
+  $prefix = '';
+  $suffix = '';
+  if (isset($element['#field_prefix']) || isset($element['#field_suffix'])) {
+    if (!empty($element['#input_group'])) {
+      $prefix .= '<div class="input-group">';
+      $prefix .= isset($element['#field_prefix']) ? '<span class="input-group-addon">' . $element['#field_prefix'] . '</span>' : '';
+      $suffix .= isset($element['#field_suffix']) ? '<span class="input-group-addon">' . $element['#field_suffix'] . '</span>' : '';
+      $suffix .= '</div>';
+    }
+    else {
+      $prefix .= isset($element['#field_prefix']) ? $element['#field_prefix'] : '';
+      $suffix .= isset($element['#field_suffix']) ? $element['#field_suffix'] : '';
+    }
+  }
+  switch ($element['#title_display']) {
+    case 'before':
+    case 'invisible':
+      $theme = [
+        '#theme' => 'form_element_label',
+      ];
+      $theme += array_intersect_key($element, array_flip(['#id', '#required', '#title', '#title_display']));;
+      $output .= ' ' . render($theme) . ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      break;
+
+    case 'after':
+      if ($is_radio || $is_checkbox) {
+        $output .= ' ' . $prefix . $element['#children'] . $suffix;
+      }
+      else {
+        $variables['#children'] = ' ' . $prefix . $element['#children'] . $suffix;
+      }
+      $theme = [
+        '#theme' => 'form_element_label',
+      ];
+      $theme += array_intersect_key($element, array_flip(['#id', '#required', '#title', '#title_display']));;
+      $output .= ' ' . render($theme) . "\n";
+      break;
+    case 'none':
+    case 'attribute':
+      $output .= ' ' . $prefix . $element['#children'] . $suffix . "\n";
+      break;
+  }
+  if (isset($element['#description'])) {
+    $output .= '<p class="help-block">' . $element['#description'] . "</p>\n";
+  }
+  $output .= "</div>\n";
+  return $output;
+}
+
+/**
+ * @param $variables
+ */
+function progressive_preprocess_breadcrumb(&$variables) {
+  $variables['breadcrumb'][] = ['text' => drupal_get_title()];
+}
+
+/**
+ * Implementation of hook_menu_local_tasks().
+ */
+function progressive_menu_local_tasks($variables) {
+  $output = '';
+  if (!empty($variables['primary'])) {
+    $variables['primary']['#prefix'] = '<h2 class="element-invisible">' . t('Primary tabs') . '</h2>';
+    $variables['primary']['#prefix'] .= '<ul class="tabs primary">';
+    $variables['primary']['#suffix'] = '</ul>';
+    $output .= render($variables['primary']);
+  }
+  if (!empty($variables['secondary'])) {
+    $variables['secondary']['#prefix'] = '<h2 class="element-invisible">' . t('Secondary tabs') . '</h2>';
+    $variables['secondary']['#prefix'] .= '<ul class="tabs secondary">';
+    $variables['secondary']['#suffix'] = '</ul>';
+    $output .= render($variables['secondary']);
+  }
+
+  return $output;
+}
+
+/**
+ * Implementation of hook_preprocess_page().
+ */
+function progressive_preprocess_page(array &$variables) {
+  // Maintenances.
+  $alias = _get_current_path_alias();
+  $maintenances = [
+    '/content/coming-soon',
+    '/content/under-construction',
+  ];
+  if (in_array($alias, $maintenances)) {
+    switch ($alias) {
+      // Coming soon
+      case $maintenances[0]:
+        $request_time = strtotime(theme_get_setting('coming_soon_timer'));
+        $variables['count_down'] = \Drupal::service('date.formatter')
+          ->format($request_time, 'custom', 'Y/m/d H:i:s');
+
+        $coming_soon_content = theme_get_setting('coming_soon_content');
+        $variables['coming_text'] = check_markup($coming_soon_content['value'], $coming_soon_content['format']);
+        break;
+
+      // Under construction
+      case $maintenances[1]:
+        $under_construction_content = theme_get_setting('under_construction_content');
+        $variables['text_center'] = check_markup($under_construction_content['value'], $under_construction_content['format']);
+
+        $under_construction_left = theme_get_setting('under_construction_left');
+        $variables['coming_text'] = check_markup($under_construction_left['value'], $under_construction_left['format']);
+
+        $variables['phone'] = nl2br(theme_get_setting('under_construction_phones'));
+
+        $variables['address'] =  nl2br(theme_get_setting('under_construction_address'));
+        break;
+    }
+    $coming_soon_bottom = theme_get_setting('coming_soon_bottom');
+    $variables['social'] = check_markup($coming_soon_bottom['value'], $coming_soon_bottom['format']);
+  }
+  $logo_url = theme_get_setting('logo.url');
+  $variables['logo_url'] = str_replace('.svg', '.png', $logo_url);
+
+  // Get all regions for current theme.
+  $current_theme = \Drupal::config('system.theme')->get('default');
+  $theme_settings = $current_theme . '.settings';
+  $layouts = \Drupal::configFactory()
+    ->getEditable($theme_settings)
+    ->get('nikadevs_cms_layout');
+
+
+  if (function_exists('nikadevs_cms_page_layout') && $layouts != []) {
+    $variables['nikadevs_page'] = nikadevs_cms_page_layout(['page' => $variables['page']]);
+    $variables['layout_builder_activated'] = TRUE;
+  }
+  else {
+    $variables['layout_builder_activated'] = FALSE;
+  }
+
+  $status = \Drupal::requestStack()->getCurrentRequest()->attributes->get('exception');
+  $variables['page_404'] = $status && $status->getStatusCode() == 404 ? TRUE : FALSE;
+}
+
+/**
+ * Implementation of hook_preprocess_html().
+ */
+function progressive_preprocess_html(&$variables) {
+  $nikadevs = strpos($_SERVER['HTTP_HOST'], 'nikadevs') !== FALSE;
+
+  $maintenance_mode = (bool) \Drupal::state()->get('system.maintenance_mode');
+  $variables['maintenance_mode'] = $maintenance_mode;
+
+  $skin = theme_get_setting('skin');
+  $variables['#attached']['library'][] = 'progressive/' . $skin . '-pages-customizer';
+  $variables['skin'] = $skin;
+
+  $language_interface = \Drupal::languageManager()->getCurrentLanguage();
+  $lng_dir = $language_interface->getDirection() == 'rtl' ? 'rtl' : 'ltr';
+  $variables['lng_dir'] = $lng_dir;
+  $variables['lng_code'] = $language_interface->getId();
+
+  if ($lng_dir == 'rtl') {
+    $variables['#attached']['library'][] = 'progressive/language-dir-rtl';
+  }
+
+  $variables['mobile_menu_toggle'] = theme_get_setting('mobile_menu_toggle');
+  $variables['gmap_key'] = theme_get_setting('gmap_key');
+  if (theme_get_setting('header_top_fixed')) {
+    $variables['attributes']['class'][] = 'fixed-top';
+  }
+
+  $hosts = ['avoluvach', 'development'];
+  $dev = ($nikadevs || in_array($_SERVER['HTTP_HOST'], $hosts));
+  $variables['dev'] = $dev ? TRUE : FALSE;
+  if ($dev) {
+    $variables['#attached']['library'][] = 'progressive/style-switcher-js';
+    $variables['#attached']['library'][] = 'progressive/style-switcher-css';
+  }
+
+  $variables['base_theme_path'] = drupal_get_path('theme', 'progressive');
+
+  /*
+    drupal_add_js(array(
+      'theme_path' => drupal_get_path('theme', 'progressive'),
+      'basePath' => base_path(),
+      'progressive' =>[
+        'mobile_menu_toggle' => theme_get_setting('mobile_menu_toggle'),
+        'gmap_key' => theme_get_setting('gmap_key')
+      ],
+      'ubercart_currency' => variable_get('uc_currency_sign')
+    ), 'setting');
+  */
+
+  $current_path = \Drupal::service('path.current')->getPath();
+
+  switch ($current_path) {
+    case '/user/login':
+      $variables['attributes']['class'][] = 'page-user-login';
+      break;
+
+    case '/user/register':
+      $variables['attributes']['class'][] = 'page-user-register';
+      break;
+
+    case '/user/password':
+      $variables['attributes']['class'][] = 'page-user-password';
+      break;
+  }
+
+  $alias = _get_current_path_alias();
+  $args = explode('/', $current_path);
+
+  // Maintenance.
+  $maintenances = [
+    '/content/coming-soon',
+    '/content/under-construction',
+  ];
+  $variables['maintenances'] = in_array($alias, $maintenances) && $nikadevs ? TRUE : FALSE;
+
+  // Login Page
+  if ($args[1] == 'user' && ((isset($args[2]) && in_array($args[2], ['register', 'password', 'login'])) || (!isset($args[2]) && \Drupal::currentUser()->isAnonymous()))) {
+    $variables['attributes']['class'][] = 'page-login-promo';
+  }
+  if (theme_get_setting('boxed') || ($current_path == '/node/107' && $nikadevs)) {  // Simple (Boxed)
+    $variables['attributes']['class'][] = 'boxed';
+  }
+  module_load_include('inc', 'nikadevs_cms', 'inc/nikadevs_cms');
+  $one_page = _is_one_page();
+  if (theme_get_setting('header_top_menu') && !in_array($current_path, ['/user/login', '/user/register', '/user/password']) && !$one_page && !$maintenance_mode) {
+    $variables['attributes']['class'][] = 'hidden-top';
+  }
+  if (theme_get_setting('header_top_fixed')) {
+    $variables['attributes']['class'][] = 'fixed-top';
+  }
+  if ($one_page) {
+    $variables['attributes']['class'][] = 'one-page';
+  }
+
+  // Theme Page Background settings.
+  $current_theme = \Drupal::config('system.theme')->get('default');
+  $settings = \Drupal::config('progressive_cms.settings')->get('background_' . $current_theme);
+
+  // Detecting BG image for Maintenance page.
+  // Instead progressive_cms_init() in D7.
+  $maintenance_type = '';
+  if ($maintenance_mode) {
+    $maintenance_type = theme_get_setting('maintenance_type');
+    $maintenance_type = Unicode::strtolower($maintenance_type);
+    $maintenance_type = '/' . str_replace(' ', '-', $maintenance_type);
+  }
+
+  foreach ($settings as $setting) {
+    $pages = Unicode::strtolower($setting['pages']);
+    // Compare the lowercase internal and lowercase path alias (if any).
+    $page_match = \Drupal::service('path.matcher')->matchPath($alias, $pages);
+
+    if ($alias != $current_path) {
+      $page_match = $page_match || \Drupal::service('path.matcher')->matchPath($current_path, $pages);
+    }
+
+    // Set Maintenance BG Image: for Anonymous, on pages besides /user*
+    if (!empty($maintenance_type) && strpos($pages, $maintenance_type) !== FALSE && \Drupal::currentUser()->isAnonymous() && !in_array($current_path, ['/user/login', '/user/register', '/user/password'])) {
+      $page_match = TRUE;
+    }
+
+    global $body_classes;
+    $variables['attributes']['class'][] = $body_classes;
+
+    // If match found - use this layout
+    if ($page_match) {
+      // Page 404
+      if (_get_current_path_alias() == '/page-404-bg') {
+        $variables['attributes']['class'][] = 'page-404-promo';
+      }
+
+      $file = File::load($setting['fid']);
+      if ($file) {
+        $uri = $file->getFileUri();
+        $image = file_create_url($uri);
+        $css = "background-image: url('" . $image . "') !important;
+            background-repeat: no-repeat;
+            background-position: center top;
+            -webkit-background-size: cover;
+            background-size: cover;";
+        $variables['#attached']['library'][] = 'progressive/background-css';
+//        if ($setting['blur']) {
+        $variables['#attached']['library'][] = 'progressive/page-404';
+        $variables['attributes']['class'][] = 'blur-page';
+        $variables['attributes']['data-blur-amount'] = $setting['blur'];
+        $variables['attributes']['data-blur-image'] = $image;
+//        }
+//        else {
+//          $variables['attributes']['class'][] = 'body-background';
+//          drupal_add_css('body{' . $css . '}',['type' => 'inline')];
+//        }
+        if (isset($setting['overlay']) && $setting['overlay']) {
+          $variables['attributes']['class'][] = $setting['overlay'];
+        }
+        $variables['css'] = $css;
+        return $css;
+      }
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_maintenance_page().
+ * @param $variables
+ */
+function progressive_preprocess_maintenance_page(&$variables) {
+  $variables['under_construction'] = FALSE;
+
+  $logo_url = theme_get_setting('logo.url');
+  $variables['logo_url'] = str_replace('.svg', '.png', $logo_url);
+
+  $coming_soon_bottom = theme_get_setting('coming_soon_bottom');
+  $variables['social'] = check_markup($coming_soon_bottom['value'], $coming_soon_bottom['format']);
+
+  if (theme_get_setting('maintenance_type') == 'Under Construction') {
+    $variables['under_construction'] = TRUE;
+    $under_construction_content = theme_get_setting('under_construction_content');
+    $variables['text_center'] = check_markup($under_construction_content['value'], $under_construction_content['format']);
+
+    $under_construction_left = theme_get_setting('under_construction_left');
+    $variables['coming_text'] = check_markup($under_construction_left['value'], $under_construction_left['format']);
+
+    $variables['phone'] = nl2br(theme_get_setting('under_construction_phones'));
+
+    $variables['address'] =  nl2br(theme_get_setting('under_construction_address'));
+  }
+  else {
+    $request_time = strtotime(theme_get_setting('coming_soon_timer'));
+    $variables['count_down'] = \Drupal::service('date.formatter')
+      ->format($request_time, 'custom', 'Y/m/d H:i:s');
+
+    $coming_soon_content = theme_get_setting('coming_soon_content');
+    $variables['coming_text'] = check_markup($coming_soon_content['value'], $coming_soon_content['format']);
+  }
+}
+
+/**
+ * Implements theme_field()
+ *
+ * @param $variables
+ * @return string
+ */
+function progressive_field__field_old_price($variables) {
+  $output = '';
+  if (count($variables['items'])) {
+    foreach ($variables['items'] as $key => $item) {
+      $output .= '<span class="price-old">' . $variables['items'][$key]['content']['#markup'] . '</span>';
+    }
+  }
+  return $output;
+}
+
+/**
+ * Implements theme_field()
+ */
+function progressive_field__fivestar($variables) {
+  $output = '';
+  if (count($variables['items'])) {
+    foreach ($variables['items'] as $key => $item) {
+      $output .= render($variables['items'][$key]['content']);
+    }
+  }
+  return $output;
+}
+
+/**
+ * @param $vars
+ */
+function progressive_preprocess_tb_megamenu_column(&$vars) {
+  foreach ($vars['attributes']['class'] as $key => $class) {
+    $vars['attributes']['class'][$key] = str_replace(['span12', 'span'], ['megamenu-column-single', 'col-md-'], $class);
+  }
+}
+
+/**
+ * Implements theme_status_messages().
+ * @param $variables
+ * @return string
+ */
+function progressive_status_messages($variables) {
+  $output = '';
+  if (!empty($variables['message_list'])) {
+    $status_heading = [
+      'status' => t('Status message'),
+      'error' => t('Error message'),
+      'warning' => t('Warning message'),
+    ];
+    $types = [
+      'status' => 'success',
+      'error' => 'danger',
+      'warning' => 'warning',
+    ];
+
+    foreach ($variables['message_list'] as $type => $messages) {
+      $output .= "<div class=\"alert alert-dismissable alert-" . $types[$type] . "\">\n<button type='button' class='close' data-dismiss='alert'>×</button>";
+      if (!empty($status_heading[$type])) {
+        $output .= '<h2 class="element-invisible">' . $status_heading[$type] . "</h2>\n";
+      }
+
+      $output .= " <ul>\n";
+      foreach ($messages as $message) {
+        $output .= '  <li>' . $message . "</li>\n";
+      }
+      $output .= " </ul>\n";
+      $output .= "</div>\n";
+    }
+  }
+
+  return $output;
+}

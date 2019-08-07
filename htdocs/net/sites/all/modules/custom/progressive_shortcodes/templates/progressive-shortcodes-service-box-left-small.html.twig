@@ -1,0 +1,13 @@
+<div {{ attrs|raw }}>
+  <a class="header-box" href="{{ link }}" {{ target|raw }}>
+    {% if icon is not empty %}
+      <div class="icon-box" {{ inner_icon_animation|raw }}><i class="{{ icon }}"></i></div>
+    {% endif %}
+    {% if title is not empty %}
+      <h6 {{ inner_animation|raw }}>{{ title }}</h6>
+    {% endif %}
+  </a>
+  <div {{ inner_animation|raw }}>
+    {{ text|raw }}
+  </div>
+</div>

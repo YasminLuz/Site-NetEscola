@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: project_1170x550
+label: 'Project (1170x550)'
+effects:
+  b11765c4-3ab5-4788-9fbd-1039dec0f523:
+    uuid: b11765c4-3ab5-4788-9fbd-1039dec0f523
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1170
+      height: 550

@@ -1,0 +1,20 @@
+<div {{ attrs|raw }}>
+  {% if icon is not empty %}
+    <div class="big-icon bg" {{ inner_icon_animation|raw }}>
+      <i class="{{ icon }}"></i>
+    </div>
+  {% endif %}
+  {% if title is not empty %}
+    <h4 class="title" {{ inner_animation|raw }}>{{ title }}</h4>
+  {% endif %}
+  <div class="text-small" {{ inner_animation|raw }}>
+    {{ text|raw }}
+  <div class="clearfix"></div>
+    <br />
+    {% if link is not empty %}
+      <a class="btn btn-default" href="{{ link }}" {{ target|raw }}>
+        {{ link_text }}
+      </a>
+    {% endif %}
+  </div>
+</div>

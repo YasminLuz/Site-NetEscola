@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.product_display
+    - core.entity_view_mode.commerce_product.teaser
+    - field.field.commerce_product.product_display.body
+    - field.field.commerce_product.product_display.field_catalog
+    - field.field.commerce_product.product_display.field_manufacturer
+    - field.field.commerce_product.product_display.field_rating
+    - field.field.commerce_product.product_display.field_reviews
+    - field.field.commerce_product.product_display.stores
+    - field.field.commerce_product.product_display.variations
+id: commerce_product.product_display.teaser
+targetEntityType: commerce_product
+bundle: product_display
+mode: teaser
+content:
+  flag_compare:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  flag_wishlist:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  variations:
+    type: entity_reference_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: teaser
+      link: false
+    third_party_settings: {  }
+    region: content
+hidden:
+  body: true
+  created: true
+  field_catalog: true
+  field_manufacturer: true
+  field_rating: true
+  field_reviews: true
+  langcode: true
+  stores: true
+  uid: true

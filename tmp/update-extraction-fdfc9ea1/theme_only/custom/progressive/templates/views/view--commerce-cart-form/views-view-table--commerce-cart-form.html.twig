@@ -1,0 +1,125 @@
+{#
+/**
+ * @file
+ * Default theme implementation for displaying a view as a table.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ *   - class: HTML classes that can be used to style contextually through CSS.
+ * - title : The title of this group of rows.
+ * - header: The table header columns.
+ *   - attributes: Remaining HTML attributes for the element.
+ *   - content: HTML classes to apply to each header cell, indexed by
+ *   the header's key.
+ *   - default_classes: A flag indicating whether default classes should be
+ *     used.
+ * - caption_needed: Is the caption tag needed.
+ * - caption: The caption for this table.
+ * - accessibility_description: Extended description for the table details.
+ * - accessibility_summary: Summary for the table details.
+ * - rows: Table row items. Rows are keyed by row number.
+ *   - attributes: HTML classes to apply to each row.
+ *   - columns: Row column items. Columns are keyed by column number.
+ *     - attributes: HTML classes to apply to each column.
+ *     - content: The column content.
+ *   - default_classes: A flag indicating whether default classes should be
+ *     used.
+ * - responsive: A flag indicating whether table is responsive.
+ * - sticky: A flag indicating whether table header is sticky.
+ *
+ * @see template_preprocess_views_view_table()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'cols-' ~ header|length,
+    responsive ? 'responsive-enabled',
+    sticky ? 'sticky-enabled',
+    'shopping-cart-table',
+    'table',
+    'table-bordered',
+    'table-striped'
+  ]
+%}
+<div class="table-box">
+<table{{ attributes.addClass(classes) }}>
+  {% if caption_needed %}
+    <caption>
+    {% if caption %}
+      {{ caption }}
+    {% else %}
+      {{ title }}
+    {% endif %}
+    {% if (summary is not empty) or (description is not empty) %}
+      <details>
+        {% if summary is not empty %}
+          <summary>{{ summary }}</summary>
+        {% endif %}
+        {% if description is not empty %}
+          {{ description }}
+        {% endif %}
+      </details>
+    {% endif %}
+    </caption>
+  {% endif %}
+  {% if header %}
+    <thead>
+      <tr>
+        <th class="td-images"></th>
+        <th class="td-name">{{ 'Product Name'|t }}</th>
+        <th class="td-price">{{ 'Unit Price'|t }}</th>
+        <th class="td-qty">{{ 'Qty'|t }}</th>
+        <th class="td-total">{{ 'Subtotal'|t }}</th>
+        <th class="td-remove"></th>
+      </tr>
+    </thead>
+  {% endif %}
+
+  <tbody>
+    {% for row in rows %}
+      <tr{{ row.attributes }}>
+        <td class="td-images">
+          {{ row.columns.field_images.content }}
+        </td>
+        <td class="td-name">
+          <h2 class="product-name">{{ row.columns.title.content }}</h2>
+        </td>
+        <td class="td-price">
+          <div class="product-info"><span class="uc-price">{{ row.columns.unit_price__number.content }}</span></div>
+        </td>
+        <td class="td-qty">{{ row.columns.edit_quantity.content }}</td>
+        <td class="td-total">
+          <span class="uc-price">{{ row.columns.total_price__number.content }}</span>
+        </td>
+        <td class="td-remove">
+          <div class="hidden">
+            {{ row.columns.remove_button.content }}
+          </div>
+          <a href="#" class="product-remove button-click">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+              <g>
+                <path fill="#7f7f7f" d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
+                <path fill="#7f7f7f" d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
+                <path fill="#7f7f7f" d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
+              c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
+              H5V2z M12,14H4V5h8V14z"></path>
+              </g>
+            </svg>
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<div class="shopping-cart-table shopping-cart-table-button table action no-border form-wrapper" id="edit-continue-update">
+  <span class="float-left">
+    <i class="fa fa-angle-left"></i> <a href="{{ path('view.products_grid.page') }}">{{ 'Continue shopping'|t }}</a>
+  </span>
+  <a href="#" class="update update-cart-link">
+    <i class="fa fa-rotate-right"></i> {{ 'Update Shopping Cart'|t }}</a>
+  <br class="clearfix">
+</div>

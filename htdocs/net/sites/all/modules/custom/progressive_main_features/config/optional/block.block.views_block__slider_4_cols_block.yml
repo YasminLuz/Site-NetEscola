@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.slider_4_cols
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__slider_4_cols_block
+theme: progressive_sub
+region: content_top
+weight: 0
+provider: null
+plugin: 'views_block:slider_4_cols-block'
+settings:
+  id: 'views_block:slider_4_cols-block'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/node/107"
+    negate: false
+    context_mapping: {  }

@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.product_carousel
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__product_carousel_block_2
+theme: progressive_sub
+region: content_top
+weight: 0
+provider: null
+plugin: 'views_block:product_carousel-block'
+settings:
+  id: 'views_block:product_carousel-block'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/node/106\r\n/node/109"
+    negate: false
+    context_mapping: {  }

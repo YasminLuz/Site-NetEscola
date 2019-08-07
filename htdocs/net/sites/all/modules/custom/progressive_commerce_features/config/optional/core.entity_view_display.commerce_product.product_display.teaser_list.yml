@@ -1,0 +1,74 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_type.product_display
+    - core.entity_view_display.comment.default_reviews.default
+    - core.entity_view_mode.commerce_product.teaser_list
+    - field.field.commerce_product.product_display.body
+    - field.field.commerce_product.product_display.field_catalog
+    - field.field.commerce_product.product_display.field_manufacturer
+    - field.field.commerce_product.product_display.field_rating
+    - field.field.commerce_product.product_display.field_reviews
+    - field.field.commerce_product.product_display.stores
+    - field.field.commerce_product.product_display.variations
+  module:
+    - comment
+    - fivestar
+    - text
+id: commerce_product.product_display.teaser_list
+targetEntityType: commerce_product
+bundle: product_display
+mode: teaser_list
+content:
+  body:
+    type: text_trimmed
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      trim_length: 240
+    third_party_settings: {  }
+  field_rating:
+    weight: 2
+    label: hidden
+    settings:
+      fivestar_widget: modules/fivestar/widgets/small/small.css
+    third_party_settings: {  }
+    type: fivestar_stars
+    region: content
+  field_reviews:
+    weight: 3
+    label: hidden
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    type: comment_default
+    region: content
+  flag_compare:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  flag_wishlist:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  variations:
+    type: entity_reference_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: teaser_list
+      link: false
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  field_catalog: true
+  field_manufacturer: true
+  langcode: true
+  stores: true
+  uid: true

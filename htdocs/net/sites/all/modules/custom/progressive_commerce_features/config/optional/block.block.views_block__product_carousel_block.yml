@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.product_carousel
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__product_carousel_block
+theme: progressive_sub
+region: top
+weight: -16
+provider: null
+plugin: 'views_block:product_carousel-block'
+settings:
+  id: 'views_block:product_carousel-block'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: "/product-compare\r\n/shop\r\n/shop/*"
+    negate: false
+    context_mapping: {  }

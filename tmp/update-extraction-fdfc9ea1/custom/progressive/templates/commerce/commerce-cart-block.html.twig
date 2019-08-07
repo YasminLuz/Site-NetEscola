@@ -1,0 +1,10 @@
+{% if content %}
+  <strong>{{ 'Recently added item(s)'|t }}</strong>
+    {{ content }}
+  <div class="cart-button">
+    <a class="btn btn-default" href="/cart">{{ 'View Cart'|t }}</a>
+    <a class="btn btn-default" href="/cart">{{ 'Checkout'|t }}</a>
+  </div>
+{% else %}
+  <strong>{{ 'Your shopping cart is empty.'|t }}</strong>
+{% endif %}

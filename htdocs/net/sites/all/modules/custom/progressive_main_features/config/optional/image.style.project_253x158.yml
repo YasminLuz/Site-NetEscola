@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: project_253x158
+label: 'Project (253x158)'
+effects:
+  1eca413f-02c0-4906-9541-a03b6d26e506:
+    uuid: 1eca413f-02c0-4906-9541-a03b6d26e506
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 253
+      height: 158

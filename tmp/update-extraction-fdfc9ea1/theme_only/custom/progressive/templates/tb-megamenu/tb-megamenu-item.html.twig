@@ -1,0 +1,17 @@
+{%
+  set li_class = [
+    submenu is not null ? 'parent'
+  ]
+%}
+<li {{ attributes.addClass(li_class) }} >
+  <a href="{{ link['url'] }}" {{ link['attributes'] }}>
+    {% if item_config['xicon'] %}
+      <i class="{{ item_config['xicon'] }}"></i>
+    {% endif %}
+    {{ link['title'] }}
+    {% if item_config['caption'] %}
+      {{ item_config['caption']|raw }}
+    {% endif %}
+  </a>
+  {{ submenu }}
+</li>

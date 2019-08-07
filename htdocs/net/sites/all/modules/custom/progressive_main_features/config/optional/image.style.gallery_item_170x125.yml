@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: gallery_item_170x125
+label: 'Gallery Item (170x125)'
+effects:
+  c1e54459-8f2f-479c-a9d1-1bef9e756cdb:
+    uuid: c1e54459-8f2f-479c-a9d1-1bef9e756cdb
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 170
+      height: 125

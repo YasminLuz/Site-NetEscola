@@ -1,0 +1,14 @@
+<div {{ attrs|raw }}>
+  <div class="panel-heading">
+    <div class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion{{ accordion_id }}" href="#accordion-{{ accordion_count }}">
+        {{ title }}
+      </a>
+    </div>
+  </div>
+  <div id="accordion-{{ accordion_count }}" class="panel-collapse collapse{{ active }}">
+    <div class="panel-body">
+      {{ text|raw }}
+    </div>
+  </div>
+</div>

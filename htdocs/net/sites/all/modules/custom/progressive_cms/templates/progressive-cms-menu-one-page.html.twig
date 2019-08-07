@@ -1,0 +1,18 @@
+<ul class="nav navbar-nav navbar-center">
+  {% for row in rows %}
+    {% if row.dropdown_links is defined %}
+      <li class="parent">
+        <a class="scroll" href="{{ row.path }}">{{ row.name|t }}</a>
+        <ul class="sub">
+          {% for value in row.submenu %}
+            <li><a href="{{ value.path }}" {{ value.class }}>{{ value.menu_link|t }}</a></li>
+          {% endfor %}
+        </ul>
+      </li>
+    {% elseif row.show_menu is defined %}
+      <li>
+        <a href="{{ row.path }}" class="scroll">{{ row.name|t }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

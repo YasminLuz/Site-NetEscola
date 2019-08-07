@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: gallery_item_370x270
+label: 'Gallery Item (370x270)'
+effects:
+  643116d8-a967-4d1d-8938-3cae74bc6f87:
+    uuid: 643116d8-a967-4d1d-8938-3cae74bc6f87
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 370
+      height: 270

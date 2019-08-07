@@ -1,0 +1,12 @@
+<div {{ attrs|raw }}>
+  {% if is_map_overlay %}
+    <div class="contact-info col-sm-6 col-md-6" data-appear-animation="fadeInLeftBig">
+      {{ text|raw }}
+    </div>
+  {% endif %}
+  <div style="height: {{ height }}px;" class="map-canvas" data-zoom="{{ zoom }}" data-lat="{{ lat }}" data-lng="{{ lng }}" data-marker="{{ marker }}" {{ type|raw }} {{ title }}>
+    {% if is_marker_tooltip %}
+      {{ text }}
+    {% endif %}
+  </div>
+</div>

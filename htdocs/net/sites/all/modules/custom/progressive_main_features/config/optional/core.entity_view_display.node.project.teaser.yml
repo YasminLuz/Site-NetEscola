@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.project.body
+    - field.field.node.project.field_category
+    - field.field.node.project.field_client
+    - field.field.node.project.field_date
+    - field.field.node.project.field_images
+    - field.field.node.project.field_link
+    - field.field.node.project.field_slider_body
+    - field.field.node.project.field_slider_link
+    - field.field.node.project.field_slider_title
+    - field.field.node.project.field_tags
+    - node.type.project
+  module:
+    - text
+    - user
+id: node.project.teaser
+targetEntityType: node
+bundle: project
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 0
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_category: true
+  field_client: true
+  field_date: true
+  field_images: true
+  field_link: true
+  field_slider_body: true
+  field_slider_link: true
+  field_slider_title: true
+  field_tags: true
+  langcode: true
+  links: true

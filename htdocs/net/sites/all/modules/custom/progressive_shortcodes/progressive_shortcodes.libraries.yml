@@ -1,0 +1,5 @@
+rewriting:
+  version: 1.x
+  css:
+    theme:
+      css/progressive_shortcodes.css: {}

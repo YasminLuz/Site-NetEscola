@@ -1,0 +1,381 @@
+<?php
+
+include_once 'inc/functions.php';
+
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\Component\Utility\Unicode;
+use Drupal\Component\Render\FormattableMarkup;
+
+/**
+ * Implements hook_theme().
+ */
+function progressive_cms_theme() {
+  return [
+    'progressive_cms_menu' => [
+      'variables' => [
+        'enable_top_box' => '',
+        'lang_name' => '',
+        'language_block' => '',
+        'anonymous' => '',
+        'enable_account_login' => '',
+        'enable_comparelist' => '',
+        'enable_wishlist' => '',
+        'flag_exists' => '',
+        'compare' => '',
+        'wishlist' => '',
+        'compare_header_class' => '',
+        'wishlist_header_class' => '',
+        'commerce_cart_exists' => '',
+        'cart_count' => '',
+        'cart_checkout' => '',
+        'cart_block' => '',
+        'logo_url' => '',
+        'search' => '',
+        'search_block' => '',
+        'enable_phones' => '',
+        'phone' => '',
+        'navigation' => '',
+      ],
+    ],
+    'progressive_cms_menu_one_page' => [
+      'variables' => [
+        'rows' => '',
+      ],
+    ],
+    'progressive_cms_page_404' => [
+      'variables' => [
+      ],
+    ],
+    'progressive_cms_page_404_bg' => [
+      'variables' => [
+      ],
+    ],
+    'progressive_cms_page_404_content' => [
+      'variables' => [
+        'content' => '',
+      ],
+    ],
+    'progressive_cms_footer_copyright' => [
+      'variables' => [
+        'copyright' => '',
+        'phones' => '',
+        'address' => '',
+        'sitename' => '',
+        'current_year' => '',
+      ],
+    ],
+    'progressive_cms_breadcrumbs' => [
+      'variables' => [
+        'items' => '',
+      ],
+    ],
+    'progressive_cms_breadcrumbs_line' => [
+      'variables' => [
+      ],
+    ],
+    'progressive_cms_page_title' => [
+      'variables' => [
+        'title' => '',
+      ],
+    ],
+    'progressive_cms_slider_image_formatter' => [
+      'variables' => [
+        'images' => '',
+        'slider_title' => '',
+        'slider_body' => '',
+        'slider_link' => '',
+      ],
+    ],
+    'progressive_cms_product_image_box_formatter' => [
+      'variables' => [
+        'image' => '',
+        'small_images' => '',
+        'corner_text' => '',
+      ],
+    ],
+  ];
+}
+
+/**
+ * @return string
+ */
+function _get_current_path_alias() {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+  $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path, $langcode);
+  return Unicode::strtolower($path_alias);
+}
+
+/**
+ * @return bool
+ */
+function _is_one_page() {
+  $pages = \Drupal::config('progressive_cms.settings')->get('one_page_pages');
+  $pages = Unicode::strtolower($pages);
+  $current_path = \Drupal::service('path.current')->getPath();
+  $path_alias = _get_current_path_alias();
+  $one_page = \Drupal::service('path.matcher')->matchPath($path_alias, $pages);
+  if ($path_alias != $current_path) {
+    $one_page = $one_page || \Drupal::service('path.matcher')->matchPath($current_path, $pages);
+  }
+  return $one_page;
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function progressive_cms_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  switch ($form_id) {
+    case 'search_form':
+      $form['#attributes']['class'][] = 'search-result';
+      $form['basic']['#attributes']['class'][] = 'search-form';
+      $form['basic']['keys']['#title_display'] = 'invisible';
+      $form['basic']['keys']['#attributes']['class'][] = 'search-string';
+      break;
+
+    case 'search_block_form':
+      $form['keys']['#attributes']['placeholder'] = t('Search here');
+      $form['keys']['#attributes']['class'][] = 'search-string';
+      $form['keys']['#prefix'] = '<div class="container-inline">';
+      $form['actions']['#suffix'] = '<button class="search-submit">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+        <path fill="#231F20" d="M12.001,10l-0.5,0.5l-0.79-0.79c0.806-1.021,1.29-2.308,1.29-3.71c0-3.313-2.687-6-6-6C2.687,0,0,2.687,0,6
+        s2.687,6,6,6c1.402,0,2.688-0.484,3.71-1.29l0.79,0.79l-0.5,0.5l4,4l2-2L12.001,10z M6,10c-2.206,0-4-1.794-4-4s1.794-4,4-4
+        s4,1.794,4,4S8.206,10,6,10z"></path>
+      </image></svg>
+      </button></div>';
+      break;
+
+    case 'comment_comment_form':
+      $form['author']['#prefix'] = '<div class="row"><div class="col-sm-6 col-md-6">';
+      $form['author']['#suffix'] = '</div></div>';
+      $form['subject']['#prefix'] = '<div class="row"><div class="col-sm-6 col-md-6">';
+      $form['subject']['#suffix'] = '</div></div>';
+      $form['field_comment']['#prefix'] = '<div class="row"><div class="col-sm-10 col-md-10">';
+      $form['field_comment']['#suffix'] = '</div></div>';
+      break;
+
+    case 'contact_message_feedback_form':
+      $form['#attributes']['class'][] = 'form-box';
+      break;
+
+    case 'user_login_form':
+      $form['#prefix']  = '<h3 class="title">' . t('Sign In') . ' <small>' . t('or') . ' ';
+      $link_url = Url::fromRoute('user.register', [], ['attributes' => ['class' => ['sign-up']]]);
+      $form['#prefix'] .= Link::fromTextAndUrl(t('Sign Up'), $link_url)->toString();
+      $form['#prefix'] .= '</small></h3><p>' . t('If you have an account with us, please log in.') . '</p>';
+      $form['actions']['#attributes']['class'] = ['buttons-box clearfix'];
+      $link_url = Url::fromRoute('user.pass', [], ['attributes' => ['class' => ['forgot']]]);
+      $form['actions']['submit']['#suffix'] = Link::fromTextAndUrl(t('Forgot Your Password?'), $link_url)->toString();
+      $form['actions']['submit']['#suffix'] .= '<span class="required"><b>*</b> ' . t('Required Field') . '</span>';
+      break;
+
+    case 'user_register_form':
+      $form['#prefix'] = '<h3 class="title">' . t('Sign Up') . '</h3>';
+      $form['actions']['#attributes']['class'] = ['buttons-box', 'clearfix'];
+      $link_text = new FormattableMarkup('<i class="fa fa-long-arrow-left"></i> @title_text', ['@title_text' => t('Back to Login')]);
+      $link_url = Url::fromRoute('user.login', [], ['attributes' => ['class' => ['btn', 'btn-border', 'btn-inverse', 'sing-in']]]);
+      $form['actions']['submit']['#suffix'] = Link::fromTextAndUrl($link_text, $link_url)->toString();
+      $form['actions']['submit']['#suffix'] .= '<span class="required"><b>*</b> ' . t('Required Field') . '</span>';
+      break;
+
+    case 'user_pass':
+      $form['#prefix'] = '<h3 class="title">' . t('Retrieve your password here') . '</h3>';
+      $form['#prefix'] .= '<p>' . t('Please enter your email address below. You will receive a link to reset your password.') . '</p>';
+      $form['actions']['#attributes']['class'] = ['buttons-box clearfix'];
+      $link_text = new FormattableMarkup('<i class="fa fa-long-arrow-left"></i> @title_text', ['@title_text' => t('Back to Login')]);
+      $link_url = Url::fromRoute('user.login', [], ['attributes' => ['class' => ['btn', 'btn-border', 'btn-inverse', 'sing-in']]]);
+      $form['actions']['submit']['#suffix'] = Link::fromTextAndUrl($link_text, $link_url)->toString();
+      $form['actions']['submit']['#suffix'] .= '<span class="required"><b>*</b> ' . t('Required Field') . '</span>';
+      break;
+  }
+
+  if (substr_count($form_id, 'webform_submission_quick_contact') == 1) {
+    $form['#attributes']['class'][] = 'form-box';
+    $form['#prefix'] = '<div class="login-register">';
+    $form['#suffix'] = '</div>';
+    $form['actions']['submit']['#attributes']['class'][] = 'btn';
+  }
+  if (substr_count($form_id, 'commerce_order_item_default_add_to_cart') == 1) {
+    $form['#attributes']['class'][] = 'add-cart-form';
+    $form['actions']['submit']['#attributes']['class'][] = 'add-cart btn btn-lg';
+  }
+  if (substr_count($form_id, 'views_form_commerce_cart_form') == 1) {
+    $form['actions']['#attributes']['class'][] = 'total';
+    $form['actions']['submit']['#attributes']['class'][] = 'update-cart-button hidden';
+    $form['actions']['checkout']['#value'] = t('Proceed to Checkout');
+    $form['actions']['checkout']['#attributes']['class'][] = 'checkout btn-lg';
+    $form['actions']['checkout']['#prefix'] = '<div class="checkout-button-wrapper">';
+    $form['actions']['checkout']['#suffix'] = '</div>';
+  }
+}
+
+/**
+ * @param $menu_name
+ * @param string $class
+ * @param string $id
+ * @return mixed|null
+ */
+function render_menu($menu_name, $class = '', $id = '') {
+  $menu_tree = \Drupal::menuTree();
+  // Build the typical default set of menu tree parameters.
+  $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+  // Load the tree based on this set of parameters.
+  $tree = $menu_tree->load($menu_name, $parameters);
+  // Transform the tree using the manipulators you want.
+  $manipulators = [
+    // Only show links that are accessible for the current user.
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    // Use the default sorting of menu links.
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+  ];
+  $tree = $menu_tree->transform($tree, $manipulators);
+
+  // Finally, build a renderable array from the transformed tree.
+  $menu = $menu_tree->build($tree);
+  if (!empty($class)) {
+    $menu['#attributes']['class'] = is_array($class) ? $class : explode(' ', $class);
+  }
+  if (!empty($id)) {
+    $menu['#attributes']['id'] = $id;
+  }
+
+  // Add .parent class to submenus.
+  foreach ($menu['#items'] as $item_key => $item) {
+    if (!empty($item['below'])) {
+      $menu['#items'][$item_key]['attributes']->addClass('parent');
+    }
+  }
+
+  return render($menu);
+}
+
+/**
+ * @param $vars
+ */
+function progressive_cms_progressive_modern_gallery_transfer(&$vars) {
+  $progressive_modern_gallery = \Drupal::config('progressive_cms.settings')->get('progressive_modern_gallery');
+  foreach ($vars['view']->result as $id => $result) {
+    $vars['rows'][0]['#rows'][$id]['#options']['progressive_modern_gallery'] = $progressive_modern_gallery;
+  }
+}
+
+/**
+ * @param $vars
+ * @param $category_field_name
+ * @param $view_id
+ * @param string $view_display
+ */
+function progressive_cms_view_tabs_transfer(&$vars, $category_field_name, $view_id, $view_display = '') {
+  $view_tabs = [];
+  foreach ($vars['view']->result as $id => $result) {
+    $fields = $result->_entity->getFields();
+    if (array_key_exists($category_field_name, $fields)) {
+      $field_values = $fields[$category_field_name]->getValue();
+      if (!empty($field_values)) {
+        $tab_classes = [];
+        foreach ($field_values as $value) {
+          if ($value['target_id'] && $category_term = Term::load($value['target_id'])) {
+            $category_name = $category_term->get('name')->value;
+            $cid = str_replace(' ', '-', $category_name);
+            $tab_classes[] = $cid;
+            $view_tabs[$cid] = $category_name;
+          }
+        }
+        // For views-view-fields.html.twig template.
+        $vars['rows'][0]['#rows'][$id]['#options']['tab_classes'] = implode(' ', $tab_classes);
+        $vars['rows'][0]['#rows'][$id]['#options']['column_count'] = isset($vars['view']->style_plugin->options['columns']) ? $vars['view']->style_plugin->options['columns'] : '';
+      }
+    }
+  }
+  asort($view_tabs);
+  // For views-view-unformatted.html.twig template.
+  $vars['rows'][0]['#rows']['view_tabs']['#tabs'] = $view_tabs;
+  // For views-view.html.twig template instead views-view-unformatted.html.
+  $vars['view_tabs'] = $view_tabs;
+}
+
+
+/**
+ * Implements template_preprocess_views_view().
+ * @param $variables
+ */
+function progressive_cms_preprocess_views_view(&$variables) {
+  $vid = $variables['view']->id();
+  switch ($vid) {
+    case 'projects':
+    case 'projects_carousel':
+    case 'portfolio_1_column':
+    case 'portfolio_columns':
+      // Tabs.
+      progressive_cms_view_tabs_transfer($variables, 'field_category', $vid);
+      break;
+
+    case 'modern_gallery':
+      // Column settings.
+      progressive_cms_progressive_modern_gallery_transfer($variables);
+      break;
+
+    case 'products_grid':
+    case 'products_list':
+      // Icons: Grid | List
+      $current_path = \Drupal::service('path.current')->getPath();
+      $is_shop_link_list = substr_count($current_path, theme_get_setting('shop_link_list')) == 1;
+
+      $grid  = $is_shop_link_list ? '<a href="' . theme_get_setting('shop_link') . '" class="grid">' : '<span class="grid">';
+      $grid .= '<span class="glyphicon glyphicon-th-large"></span>';
+      $grid .= $is_shop_link_list ? '</a>' : '</span>';
+
+      $list  = !$is_shop_link_list ? '<a href="' . theme_get_setting('shop_link_list') . '" class="list">' : '<span class="list">';
+      $list .= '<span class="glyphicon glyphicon-th-list"></span>';
+      $list .= !$is_shop_link_list ? '</a>' : '</span>';
+
+      $variables['grid_icon'] = $grid;
+      $variables['list_icon'] = $list;
+      break;
+  }
+}
+
+/**
+ * Implements template_preprocess_views_view_fields().
+ * @param $variables
+ */
+function progressive_cms_preprocess_views_view_fields(&$variables) {
+  $vid = $variables['view']->id();
+  switch ($vid) {
+    case 'blog_timeline':
+      global $num;
+      $id = $vid . '-' . $variables['row']->nid;
+      $settings = \Drupal::config('progressive_cms.settings')->get('blog_timeline');
+      $setting = isset($settings[$id]) ? $settings[$id] : ['id' => $id];
+      $form = '';
+      if (\Drupal::currentUser()->hasPermission('use nikadevs cms')) {
+        $form = \Drupal::formBuilder()->getForm('Drupal\progressive_cms\Form\ProgressiveCmsBlogTimelineForm', $setting);
+      }
+      $variables['form'] = $form;
+      $variables['form_setting'] = $setting;
+      $variables['num'] = $num++;
+      break;
+
+    case 'product_taxonomy':
+      $shop_link = theme_get_setting('shop_link');
+      $shop_link = '/' . ltrim($shop_link, '/');
+      $tid = isset($variables['row']->tid) ? $variables['row']->tid : '';
+      $variables['shop_link'] = !empty($tid) ? \Drupal::request()->getBaseUrl() . implode('/', [$shop_link, $tid]) : '';
+      break;
+  }
+}
+
+
+/**
+ * Implements hook_block_build_alter().
+ */
+function progressive_cms_block_build_alter(array &$build, \Drupal\Core\Block\BlockPluginInterface $block) {
+  $build['#cache']['max-age'] = 0;
+}

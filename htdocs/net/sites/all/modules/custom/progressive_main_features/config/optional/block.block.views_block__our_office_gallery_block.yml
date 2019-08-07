@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.our_office_gallery
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__our_office_gallery_block
+theme: progressive_sub
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:our_office_gallery-block'
+settings:
+  id: 'views_block:our_office_gallery-block'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /content/our-team
+    negate: false
+    context_mapping: {  }

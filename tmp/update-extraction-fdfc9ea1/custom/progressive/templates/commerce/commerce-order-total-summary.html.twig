@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Default order total summary template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - totals: An array of order totals values with the following keys:
+ *   - subtotal: The order subtotal price.
+ *   - adjustments: An array of adjustment totals:
+ *     - type: The adjustment type.
+ *     - label: The adjustment label.
+ *     - total: The adjustment total price.
+ *     - weight: The adjustment weight, taken from the adjustment type.
+ *   - total: The order total price.
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('commerce_order/total_summary') }}
+<div{{ attributes.addClass('row').setAttribute('id', 'car-bottom') }}>
+  <div class="col-sm-4 col-md-4 float-right">
+    <div class="car-bottom-box bg total">
+      <span id="subtotal-title">{{ 'Grand Total'|t }} </span>
+      <span class="uc-price">{{ totals.total|commerce_price_format }}</span>
+    </div>
+  </div>
+</div>

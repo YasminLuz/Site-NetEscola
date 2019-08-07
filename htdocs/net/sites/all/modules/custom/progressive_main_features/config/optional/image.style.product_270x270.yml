@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: product_270x270
+label: 'Product (270x270)'
+effects:
+  32a91b9c-c290-438a-8b2c-57a914bc2c93:
+    uuid: 32a91b9c-c290-438a-8b2c-57a914bc2c93
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 270
+      height: 270

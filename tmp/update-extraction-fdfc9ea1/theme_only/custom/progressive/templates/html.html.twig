@@ -1,0 +1,104 @@
+{#
+/**
+ * @file
+ * Default theme implementation for the basic structure of a single Drupal page.
+ *
+ * Variables:
+ * - logged_in: A flag indicating if user is logged in.
+ * - root_path: The root path of the current page (e.g., node, admin, user).
+ * - node_type: The content type for the current node, if the page is a node.
+ * - head_title: List of text elements that make up the head_title variable.
+ *   May contain one or more of the following:
+ *   - title: The title of the page.
+ *   - name: The name of the site.
+ *   - slogan: The slogan of the site.
+ * - page_top: Initial rendered markup. This should be printed before 'page'.
+ * - page: The rendered page markup.
+ * - page_bottom: Closing rendered markup. This variable should be printed after
+ *   'page'.
+ * - db_offline: A flag indicating if the database is offline.
+ * - placeholder_token: The token for generating head, css, js and js-bottom
+ *   placeholders.
+ *
+ * @see template_preprocess_html()
+ *
+ * @ingroup themeable
+ */
+#}
+<!DOCTYPE html>
+<html{{ html_attributes }}>
+  <head>
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    {% if maintenances %}
+      <meta name="author" content="http://themeforest.net/user/NikaDevs">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+    {% else %}
+      <meta class="viewport" name="viewport" content="width=device-width, initial-scale=1.0">
+    {% endif %}
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <link rel='stylesheet' href="{{ base_theme_path }}/css/ie/ie8.css">
+    <![endif]-->
+  </head>
+
+  {%
+    set body_classes = [
+      maintenance_mode or maintenances ? 'maintenance-page' : 'fixed-header',
+    ]
+  %}
+
+  {% set styles = css is not null ? 'style="' ~ css ~ '"' : '' %}
+  <body{{ attributes.addClass(body_classes) }} {{ styles }}>
+    {#
+      Keyboard navigation/accessibility link to main content section in
+      page.html.twig.
+    #}
+    {#<a href="#main-content" class="visually-hidden focusable">#}
+      {#{{ 'Skip to main content'|t }}#}
+    {#</a>#}
+
+    {{ page_top }}
+    {{ page }}
+    {{ page_bottom }}
+
+    {% if gmap_key %}
+      <script src="//maps.googleapis.com/maps/api/js?key={{ gmap_key }}" type="text/javascript"></script>
+    {% endif %}
+
+    {% if dev %}
+      <link rel="stylesheet" href="/d8/{{ base_theme_path }}/css/customizer/{{ skin }}-pages-customizer.css">
+      <div class="style-switcher visible-md visible-lg" id="style-switcher">
+        <h3 class="show">{{ 'Style Switcher'|t }} <a href="#"><i class="fa fa-cog"></i></a></h3>
+        <div class="style-switcher-body">
+          <h4>{{ 'Colors'|t }}</h4>
+          <ul class="styles-switcher-colors">
+            <li><a href="#" class="color-elements" data-color="elements"></a></li>
+            <li><a href="#" class="color-home" data-color="home"></a></li>
+            <li><a href="#" class="color-pages" data-color="pages"></a></li>
+            <li><a href="#" class="color-shop-5" data-color="shop-5"></a></li>
+            <li><a href="#" class="color-shop-6" data-color="shop-6"></a></li>
+            <li><a href="#" class="color-shop-8" data-color="shop-8"></a></li>
+            <li><a href="#" class="color-shop" data-color="shop"></a></li>
+          </ul>
+          <h4>{{ 'Layout'|t }}</h4>
+          <ul class="style-switcher-layout buttons-switcher">
+            <li><a href="#" class="layout-boxed">{{ 'Boxed'|t }}</a></li>
+            <li><a href="#" class="layout-wide active">{{ 'Wide'|t }}</a></li>
+          </ul>
+          <h4>{{ 'Language Direction'|t }}</h4>
+          <ul class="style-switcher-rtl buttons-switcher">
+            <li><a href="#" class="layout-ltr active">{{ 'LTR'|t }}</a></li>
+            <li><a href="#" class="layout-rtl">{{ 'RTL'|t }}</a></li>
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+    <js-bottom-placeholder token="{{ placeholder_token }}">
+  </body>
+</html>

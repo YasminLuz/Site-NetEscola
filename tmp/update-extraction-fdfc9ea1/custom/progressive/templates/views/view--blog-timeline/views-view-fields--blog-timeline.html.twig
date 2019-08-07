@@ -1,0 +1,109 @@
+{#
+/**
+ * @file
+ * Default view template to display all the fields in a row.
+ *
+ * Available variables:
+ * - view: The view in use.
+ * - fields: A list of fields, each one contains:
+ *   - content: The output of the field.
+ *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - class: The safe class ID to use.
+ *   - handler: The Views field handler controlling this field.
+ *   - inline: Whether or not the field should be inline.
+ *   - wrapper_element: An HTML element for a wrapper.
+ *   - wrapper_attributes: List of attributes for wrapper element.
+ *   - separator: An optional separator that may appear before a field.
+ *   - label: The field's label text.
+ *   - label_element: An HTML element for a label wrapper.
+ *   - label_attributes: List of attributes for label wrapper.
+ *   - label_suffix: Colon after the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ *   - has_label_colon: A boolean indicating whether to display a colon after
+ *     the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ * - row: The raw result from the query, with all data it fetched.
+ *
+ * @see template_preprocess_views_view_fields()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set article_classes = [
+    'post',
+    'views-row',
+    form_setting.no_padding is defined and form_setting.no_padding == true ? 'no-padding',
+  ]
+%}
+{%
+  set icon_classes = [
+    'timeline-icon',
+    form_setting.color is defined ? 'bg-' ~ form_setting.color,
+  ]
+%}
+{% set data_n = form_setting.livicon is defined ? form_setting.livicon : '' %}
+{% set bg = form_setting.tranparent_bg is defined and form_setting.tranparent_bg == true ? 'border border-' : 'bg bg-' %}
+{%
+  set content_classes = [
+    'timeline-content',
+    'appear-animation',
+    form_setting.color is defined ? bg ~ form_setting.color,
+  ]
+%}
+{% set attributes = attributes.addClass(content_classes) %}
+{%
+  set animations = {
+    0 : 'fadeInLeft',
+    1 : 'fadeInRight',
+  }
+%}
+{%
+  set animation_classes = [
+    animations[num % 2]
+  ]
+%}
+{%
+  set title_classes = [
+    'entry-title',
+    form_setting.title is defined and form_setting.title == false ? 'hidden',
+  ]
+%}
+
+<article {{ create_attribute({'class': article_classes}) }}>
+  <div class="timeline-time">
+    <time datetime="{{ fields.created_1.content|striptags|trim }}">
+      {{ fields.created.content }}
+    </time>
+  </div>
+
+  <div {{ create_attribute({'class': icon_classes}) }}>
+    <div class="livicon" data-n="{{ data_n }}" data-c="#fff" data-hc="0" data-s="22"></div>
+  </div>
+
+  <div{{ attributes.setAttribute('data-appear-animation', animation_classes) }}>
+
+    {% if form is not empty %}
+      <div class="contextual-links-wrapper contextual">
+        <button class="trigger focusable" type="button" aria-pressed="false"></button>
+        <div class="item-list">
+          <ul class="contextual-links contextual-form">
+            <li>
+              {{ form }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+    <h2 {{ create_attribute({'class': title_classes}) }}>
+      {{ fields.title.content }}
+    </h2>
+
+    <div class="entry-content">
+      {{ fields.body.content }}
+    </div>
+  </div>
+</article>

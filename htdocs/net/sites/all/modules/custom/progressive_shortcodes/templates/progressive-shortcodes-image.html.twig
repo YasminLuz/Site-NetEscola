@@ -1,0 +1,16 @@
+<div {{ attrs|raw }}>
+
+  {% if zoom %}
+    <a class="gallery-images" href="{{ filename }}" rel="fancybox">
+  {% endif %}
+  <img src="{{ filename }}" {{ img_class }} alt="{{ alt }}" title="{{ title }}">
+  {% if zoom %}
+    </a>
+  {% endif %}
+
+  {% if caption is not empty %}
+    <div class="description">
+      {{ caption }}
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: project_270x197
+label: 'Project (270x197)'
+effects:
+  78f6931b-fac3-4182-a6b7-625095f7cfbc:
+    uuid: 78f6931b-fac3-4182-a6b7-625095f7cfbc
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 270
+      height: 197

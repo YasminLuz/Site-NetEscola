@@ -1,0 +1,12 @@
+features:
+  name: 1
+  node_user_picture: 1
+  comment_user_picture: 1
+  comment_user_verification: 1
+  main_menu: 1
+  retina: 0
+  favicon: 1
+logo:
+  use_default: 1
+favicon:
+  use_default: 1

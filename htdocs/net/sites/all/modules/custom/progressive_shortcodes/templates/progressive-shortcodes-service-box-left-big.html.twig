@@ -1,0 +1,13 @@
+<div {{ attrs|raw }}>
+  {% if icon is not empty %}
+    <a href="{{ link }}" {{ target|raw }} class="big-icon bg pull-left" {{ inner_icon_animation|raw }}>
+      <i class="{{ icon }}"></i>
+    </a>
+  {% endif %}
+  {% if title is not empty %}
+    <h3 {{ inner_animation|raw }}>{{ title }}</h3>
+  {% endif %}
+  <p {{ inner_animation|raw }}>
+    {{ text|raw }}
+  </p>
+</div>

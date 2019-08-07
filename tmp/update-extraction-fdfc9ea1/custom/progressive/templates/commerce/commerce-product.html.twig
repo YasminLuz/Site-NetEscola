@@ -1,0 +1,94 @@
+{#
+/**
+ * @file
+ *
+ * Default product template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ *
+ * @ingroup themeable
+ */
+#}
+<article{{ attributes.addClass(['content', 'product-page']) }}>
+  <div class="row">
+    <div class="col-sm-5 col-md-5">
+      {{ product.variation_field_images }}
+    </div>
+
+    <div class="col-sm-7 col-md-7">
+      <div class="reviews-box">
+        {{ product.field_rating }}
+        {% set reviews = product.field_reviews['#items'].comment_count != NULL ? product.field_reviews['#items'].comment_count : 0 %}
+        <span class="review-count">{{ reviews }} {{ 'review(s)'|t }}</span>
+        <span class="separator">|</span>
+        <a href="#reviews" class="add-review">{{ 'Add your review'|t }}</a>
+      </div>
+
+      <div class="description">
+        {{ product.variation_field_specifications }}
+        {{ product.variation_field_short_description }}
+      </div>
+
+      <div class="price-box">
+        {{ product.variation_field_old_price }}
+        <span class="price display-price uc-product-node id">
+          {{ product.variation_price }}
+        </span>
+      </div>
+
+      {{- product|without(
+      'variation_attributes',
+      'variations',
+      'title',
+      'variation_title',
+      'variation_sku',
+      'variation_field_images',
+      'variation_price',
+      'variation_field_old_price',
+      'variation_field_specifications',
+      'variation_field_short_description',
+      'variation_field__corner_text',
+      'field_rating',
+      'field_reviews',
+      'flag_wishlist',
+      'flag_compare',
+      'body'
+      ) -}}
+
+      <div class = "variations_elements">
+        {{ product.variations }}
+      </div>
+
+
+      <div class="actions flags">
+        {{ product.flag_wishlist }}
+        {{ product.flag_compare }}
+      </div><!-- .actions -->
+    </div>
+  </div>
+
+  <div class="product-tab">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#description">{{ 'Description'|t }}</a></li>
+      <li><a href="#reviews">{{ 'Reviews'|t }}</a></li>
+    </ul><!-- .nav-tabs -->
+    <div class="tab-content">
+      <div class="tab-pane active" id="description">
+        {{ product.body }}
+      </div>
+      <div class="tab-pane" id="reviews">
+        {{ product.field_reviews }}
+      </div>
+    </div>
+  </div>
+</article>

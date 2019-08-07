@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - commerce_product.commerce_product_attribute.display_size
+    - commerce_product.commerce_product_variation_type.product
+    - field.storage.commerce_product_variation.attribute_display_size
+id: commerce_product_variation.product.attribute_display_size
+field_name: attribute_display_size
+entity_type: commerce_product_variation
+bundle: product
+label: 'Display Size'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:commerce_product_attribute_value'
+  handler_settings:
+    target_bundles:
+      - display_size
+field_type: entity_reference

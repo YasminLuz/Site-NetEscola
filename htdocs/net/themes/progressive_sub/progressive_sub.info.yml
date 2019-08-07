@@ -1,0 +1,20 @@
+name: 'Progressive Sub-Theme'
+type: theme
+description: 'Progressive is Responsive Drupal 8 Theme.'
+core: 8.x
+base theme: progressive
+regions:
+  top: 'Top'
+  content_top: 'Content Top'
+  content: 'Content'
+  sidebar: 'Sidebar'
+  team: 'Team'
+  works: 'Works'
+  services: 'Services'
+  contact_us: 'Contact Us'
+  content_bottom: 'Content Bottom'
+  footer_top: 'Footer Top'
+  footer: 'Footer'
+
+libraries:
+  - progressive_sub/global-styling

@@ -1,0 +1,39 @@
+progressive_cms.page_404:
+  path: 'page-404'
+  defaults:
+    _controller: '\Drupal\progressive_cms\Controller\ProgressiveCMSController::page_404'
+    _title: 'Page not Found'
+  requirements:
+    _permission: 'access content'
+
+progressive_cms.page_404_content:
+  path: 'page-404/content'
+  defaults:
+    _controller: '\Drupal\progressive_cms\Controller\ProgressiveCMSController::page_404'
+    _title: 'Page 404 (2)'
+  requirements:
+    _permission: 'access content'
+
+progressive_cms.page_404_bg:
+  path: 'page-404-bg'
+  defaults:
+    _controller: '\Drupal\progressive_cms\Controller\ProgressiveCMSController::page_404_bg'
+    _title: 'Page not Found'
+  requirements:
+    _permission: 'access content'
+
+progressive_cms.save_variable:
+  path: 'ajax/progressive/save-variable'
+  defaults:
+    _controller: '\Drupal\progressive_cms\Controller\ProgressiveCMSController::save_variable'
+    _title: 'Save variable'
+  requirements:
+    _permission: 'use nikadevs cms'
+
+progressive_cms.shop_link:
+  path: 'shop/{tid}'
+  defaults:
+    _controller: '\Drupal\progressive_cms\Controller\ProgressiveCMSController::shop_link'
+    _title_callback: '\Drupal\progressive_cms\Controller\ProgressiveCMSController::addPageTitle'
+  requirements:
+    _permission: 'access content'

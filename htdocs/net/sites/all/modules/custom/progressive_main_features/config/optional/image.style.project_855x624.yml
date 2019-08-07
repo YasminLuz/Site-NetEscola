@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: project_855x624
+label: 'Project (855x624)'
+effects:
+  3d53b685-3c3b-4a8e-aac2-26f8e83df762:
+    uuid: 3d53b685-3c3b-4a8e-aac2-26f8e83df762
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 855
+      height: 624

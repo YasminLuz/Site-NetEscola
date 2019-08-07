@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.our_team
+  module:
+    - system
+    - views
+  theme:
+    - progressive_sub
+id: views_block__our_team_block
+theme: progressive_sub
+region: content
+weight: -12
+provider: null
+plugin: 'views_block:our_team-block'
+settings:
+  id: 'views_block:our_team-block'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: /content/our-team
+    negate: false
+    context_mapping: {  }

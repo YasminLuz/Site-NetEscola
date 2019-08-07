@@ -1,0 +1,13 @@
+<{{ tag }}>
+  {{ words_prefix }}
+  <span {{ attrs|raw }}>
+    <span class="words-box">
+      {% for word in words %}
+        <span>
+          {{ word|trim }}
+        </span>
+      {% endfor %}
+    </span>
+  </span>
+  {{ words_suffix }}
+</{{ tag }}>

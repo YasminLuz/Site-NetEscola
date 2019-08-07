@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.manufacturer
+id: taxonomy_term.manufacturer
+target_entity_type_id: taxonomy_term
+target_bundle: manufacturer
+default_langcode: und
+language_alterable: false
